@@ -57,12 +57,6 @@ export function BankSidebar() {
       active: pathname === "/history",
     },
     {
-      label: "Analytics",
-      icon: PieChart,
-      href: "/analytics",
-      active: pathname === "/analytics",
-    },
-    {
       label: "Profile",
       icon: User,
       href: "/profile",

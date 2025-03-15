@@ -7,17 +7,17 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <header className="bg-gradient-to-br from-purple-600 to-purple-900 text-white">
+      <header className="bg-gradient-to-br from-purple-800 to-purple-950 text-white">
         <div className="container mx-auto px-4 py-16 md:py-24 flex flex-col items-center text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">Banking Made Simple</h1>
           <p className="text-xl md:text-2xl mb-8 max-w-2xl">
             Manage your finances with ease using our modern banking platform. Secure, fast, and user-friendly.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button asChild size="lg" className="bg-white text-purple-700 hover:bg-gray-100">
+            <Button asChild size="lg" className="bg-white font-bold text-purple-800 hover:bg-purple-100 ">
               <Link href="/register">Get Started</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
+            <Button asChild variant="default" size="lg" className=" bg-purple-700 font-bold text-white hover:bg-purple-800">
               <Link href="/login">Sign In</Link>
             </Button>
           </div>
@@ -110,24 +110,24 @@ export default function HomePage() {
             </div>
 
             <div className="rounded-lg overflow-hidden shadow-xl">
-              <img src="/placeholder.svg?height=600&width=800" alt="Banking App Interface" className="w-full h-auto" />
+              <img src="/" alt="Banking App Interface" className="w-full h-auto" />
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-purple-900 text-white">
+      <section className="py-16 md:py-24  bg-purple-900 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Get Started?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
             Join thousands of satisfied customers who trust SafeXBank with their finances.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-white text-purple-700 hover:bg-gray-100">
+            <Button asChild size="lg" className="bg-white text-purple-700 font-bold hover:bg-purple-100">
               <Link href="/register">Create Account</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
+            <Button asChild variant="default" size="lg" className=" bg-purple-700 font-bold text-white hover:bg-purple-800">
               <Link href="/login">Sign In</Link>
             </Button>
           </div>
@@ -136,8 +136,8 @@ export default function HomePage() {
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="container flex justify-evenly flex-col items-center p-6">
+          <div className=" grid grid-cols-2 md:grid-cols-4 xl:gap-44 md:gap-30 sm:gap-x-36 sm:gap-10 gap-y-10 gap-x-16">
             <div>
               <h3 className="text-lg font-semibold mb-4">SafeXBank</h3>
               <ul className="space-y-2">
