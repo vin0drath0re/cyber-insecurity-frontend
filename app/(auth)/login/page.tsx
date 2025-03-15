@@ -29,7 +29,7 @@ export default function LoginPage() {
   }
 
   return (
-    <Card className="shadow-lg border-purple-100 dark:border-gray-800">
+    <Card className="shadow-lg border-border border bg-card ">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold text-center text-primary">Welcome to SafeXBank</CardTitle>
         <CardDescription className="text-center">Enter your credentials to access your account</CardDescription>

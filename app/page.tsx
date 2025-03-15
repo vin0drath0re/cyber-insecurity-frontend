@@ -25,11 +25,11 @@ export default function HomePage() {
       </header>
 
       {/* Features Section */}
-      <section className="py-16 md:py-24 bg-white">
+      <section className="py-16 md:py-24 bg-card">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose SafeXBank?</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-700 dark:text-purple-200 max-w-2xl mx-auto">
               Our modern banking platform offers everything you need to manage your finances effectively.
             </p>
           </div>
@@ -40,7 +40,7 @@ export default function HomePage() {
                 <Shield className="h-6 w-6 text-purple-600" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Secure Banking</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-700 dark:text-purple-200">
                 Bank with confidence knowing your data is protected with industry-leading security.
               </p>
             </div>
@@ -50,7 +50,7 @@ export default function HomePage() {
                 <CreditCard className="h-6 w-6 text-purple-600" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Easy Payments</h3>
-              <p className="text-gray-600">Send money, pay bills, and manage transactions with just a few clicks.</p>
+              <p className="text-gray-700 dark:text-purple-200">Send money, pay bills, and manage transactions with just a few clicks.</p>
             </div>
 
             <div className="flex flex-col items-center text-center p-6 rounded-lg border border-gray-100 shadow-sm">
@@ -58,7 +58,7 @@ export default function HomePage() {
                 <Wallet className="h-6 w-6 text-purple-600" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Financial Insights</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-700 dark:text-purple-200">
                 Get detailed analytics and insights to help you make better financial decisions.
               </p>
             </div>
@@ -68,7 +68,7 @@ export default function HomePage() {
                 <Lock className="h-6 w-6 text-purple-600" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Privacy First</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-700 dark:text-purple-200">
                 Your privacy matters. We never sell your data or share it with third parties.
               </p>
             </div>
@@ -77,12 +77,12 @@ export default function HomePage() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16 md:py-24 bg-gray-50">
+      <section className="py-16 md:py-24 bg-card">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Experience Modern Banking</h2>
-              <p className="text-lg text-gray-600 mb-8">
+              <p className="text-lg text-gray-700 dark:text-purple-200 mb-8">
                 SafeXBank combines cutting-edge technology with user-friendly design to provide you with the best
                 banking experience possible.
               </p>
@@ -117,7 +117,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24  bg-purple-900 text-white">
+      <section className="py-16 md:py-24  bg-purple-950 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Get Started?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
