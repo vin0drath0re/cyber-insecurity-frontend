@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Progress } from "@/components/ui/progress"
+import AnalyticsSection from "@/components/sections/AnalyticsSection"
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("overview")
@@ -37,6 +38,7 @@ export default function DashboardPage() {
           <TabsTrigger value="cards">Cards</TabsTrigger>
         </TabsList>
         <TabsContent value="overview" className="space-y-4">
+          {/* Overview Cards */}
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -81,6 +83,7 @@ export default function DashboardPage() {
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+            {/* Recent Transactions */}
             <Card className="col-span-4">
               <CardHeader>
                 <CardTitle>Recent Transactions</CardTitle>
@@ -139,6 +142,8 @@ export default function DashboardPage() {
                 </div>
               </CardContent>
             </Card>
+            
+            {/* Spending Budget */}
             <Card className="col-span-3">
               <CardHeader>
                 <CardTitle>Spending Budget</CardTitle>
@@ -198,17 +203,19 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
           </div>
+
         </TabsContent>
-        <TabsContent value="analytics" className="space-y-4">
-          <Card>
+        <TabsContent value="analytics" className="space-y-4 ">
+          <Card >
             <CardHeader>
-              <CardTitle>Analytics</CardTitle>
+              <CardTitle className="text-3xl">Analytics</CardTitle>
               <CardDescription>View detailed analytics of your spending patterns.</CardDescription>
             </CardHeader>
-            <CardContent className="h-[400px] flex items-center justify-center">
-              <p className="text-muted-foreground">Analytics charts will be displayed here</p>
+            <CardContent className="flex justify-center">
+              <AnalyticsSection/>
             </CardContent>
           </Card>
+          
         </TabsContent>
         <TabsContent value="cards" className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

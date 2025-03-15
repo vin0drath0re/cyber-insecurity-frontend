@@ -109,16 +109,6 @@ export function Navbar() {
                         Payees
                       </Link>
                       <Link
-                        href="/analytics"
-                        className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${
-                          pathname === "/analytics"
-                            ? "bg-primary text-primary-foreground"
-                            : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                        }`}
-                      >
-                        Analytics
-                      </Link>
-                      <Link
                         href="/history"
                         className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${
                           pathname === "/history"
@@ -175,14 +165,6 @@ export function Navbar() {
                 }`}
               >
                 Payees
-              </Link>
-              <Link
-                href="/analytics"
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === "/analytics" ? "text-primary" : "text-muted-foreground"
-                }`}
-              >
-                Analytics
               </Link>
               <Link
                 href="/history"
