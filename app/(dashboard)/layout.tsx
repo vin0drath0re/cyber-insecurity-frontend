@@ -12,8 +12,8 @@ export default function DashboardLayout({
       <Navbar />
       <div className="flex">
         <BankSidebar />
-        <div className="flex mx-auto flex-col flex-1 container p-4 md:p-6">
-          <main className="flex-1">{children}</main>
+        <div className=" flex flex-col flex-1">
+          <main className="flex-1 p-4 md:p-6">{children}</main>
         </div>
       </div>
     </div>
