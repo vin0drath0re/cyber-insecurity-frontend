@@ -58,7 +58,7 @@ export function Navbar() {
     <header
       className={`sticky top-0 z-50 w-full border-b ${isHomePage ? "bg-transparent border-transparent" : "bg-background border-border"}`}
     >
-      <div className="container mx-auto px-4 md:px-6 flex h-16 items-center justify-between">
+      <div className="container mx-auto px-4 flex h-16 items-center justify-between">
         <div className="flex items-center gap-2 md:gap-4">
           {!isHomePage && (
             <Sheet>
@@ -165,6 +165,14 @@ export function Navbar() {
                 }`}
               >
                 Payees
+              </Link>
+              <Link
+                href="/investments"
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  pathname === "/payees" ? "text-primary" : "text-muted-foreground"
+                }`}
+              >
+                investments
               </Link>
               <Link
                 href="/history"

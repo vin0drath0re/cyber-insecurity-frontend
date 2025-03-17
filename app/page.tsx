@@ -1,151 +1,90 @@
-"use client";
+import Link from "next/link"
+import { ArrowRight, CheckCircle2, CreditCard, Lock, Shield, Wallet } from "lucide-react"
 
-import Link from "next/link";
-import {
-  ArrowRight,
-  CheckCircle2,
-  CreditCard,
-  Lock,
-  Shield,
-  Wallet,
-  BarChart3,
-  DollarSign,
-  Users,
-  BadgeCheck,
-  ArrowUp,
-} from "lucide-react";
-
-import { Button } from "@/components/ui/button";
-import GlassCard from "@/components/ui/cards/GlassCard";
-import { useTheme } from "@/components/theme-provider";
-import { useEffect } from "react";
+import { Button } from "@/components/ui/button"
 
 export default function HomePage() {
-  const { setTheme } = useTheme();
-
-  useEffect(() => {
-    setTheme("light"); // Force light theme when visiting this page
-  }, [setTheme]);
   return (
-    <div className="flex flex-col min-h-screen bg-white">
-      {/* <div className="heading-1 flex items-center justify-center text-zinc-950 font-bold h-20">
-          SafeXBank
-        </div> */}
+    <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center bg-gradient-to-b from-white to-purple-50 animate-bounce-once" style={{ animationDelay: "300ms" }}>
-        {/* <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-b from-white to-purple-50"></div>
-        </div> */}
-         
-        <div className="container-padding py-20">
-          <div className="max-w-3xl mx-auto text-center">
-         
-            <h1 className="heading-1 mb-6 animate-slide-up text-zinc-950">
-              <span className="text-purple-600">Modern Banking</span> For a
-              Modern World
-            </h1>
-            <p
-              className="text-lg md:text-xl text-gray-600 mb-10 animate-slide-up"
-              style={{ animationDelay: "150ms" }}
-            >
-              Experience seamless financial management with our user-centered
-              banking platform. Secure, beautiful, and designed with your needs
-              in mind.
-            </p>
-            <div
-              className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up"
-              style={{ animationDelay: "300ms" }}
-            >
-              <Button
-                size="lg"
-                className="bg-purple-600 hover:bg-purple-700 text-white rounded-full"
-              >
-                <Link href="/register">Get Started Now</Link>
-                <ArrowRight className="ml-1 h-5 w-5" />
-              </Button>
-              <Button size="lg" variant="outline" className="rounded-full">
+      <header className="bg-gradient-to-br from-purple-800 to-purple-950 text-white">
+        <div className="container mx-auto px-4 py-16 md:py-24 flex flex-col items-center text-center">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">Banking Made Simple</h1>
+          <p className="text-xl md:text-2xl mb-8 max-w-2xl">
+            Manage your finances with ease using our modern banking platform. Secure, fast, and user-friendly.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Button asChild size="lg" className="bg-white font-bold text-purple-800 hover:bg-purple-100 ">
+              <Link href="/register">Get Started</Link>
+            </Button>
+            <Button asChild variant="default" size="lg" className=" bg-purple-700 font-bold text-white hover:bg-purple-800">
               <Link href="/login">Sign In</Link>
-              </Button>
-            </div>
+            </Button>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 mb-4 items-center justify-center flex flex-col">
-        <div className="opacity-0 animate-fade-in" style={{animationDelay:"650ms"}}>
-          <span className="text-purple-300 animate-fade-out" style={{animationDelay:"2000ms"}}>Learn More</span>
-          
-          <ArrowUp className="h-20 w-20 text-purple-300 animate-fade-out" style={{animationDelay:"2000ms"}} />
-          </div>
-          </div>
-      </section>
+      </header>
 
       {/* Features Section */}
-      <section className="section-padding bg-white">
-        <div className="container-padding mx-auto">
+      <section className="py-16 md:py-24 bg-card">
+        <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-zinc-950">
-              Why Choose SafeXBank?
-            </h2>
-            <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-              Our modern banking platform offers everything you need to manage
-              your finances effectively.
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose SafeXBank?</h2>
+            <p className="text-lg text-gray-700 dark:text-purple-200 max-w-2xl mx-auto">
+              Our modern banking platform offers everything you need to manage your finances effectively.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                icon: <Shield className="h-8 w-8 text-purple-600" />,
-                title: "Secure Banking",
-                description:
-                  "Bank with confidence knowing your data is protected with industry-leading security.",
-              },
-              {
-                icon: <CreditCard className="h-8 w-8 text-purple-600" />,
-                title: "Easy Payments",
-                description:
-                  "Send money, pay bills, and manage transactions with just a few clicks.",
-              },
-              {
-                icon: <BarChart3 className="h-8 w-8 text-purple-600" />,
-                title: "Financial Insights",
-                description:
-                  "Get detailed analytics and insights to help you make better financial decisions.",
-              },
-              {
-                icon: <Lock className="h-8 w-8 text-purple-600" />,
-                title: "Privacy First",
-                description:
-                  "Your privacy matters. We never sell your data or share it with third parties.",
-              },
-            ].map((feature, index) => (
-              <GlassCard
-                key={index}
-                className="p-6 flex flex-col items-center text-center h-full"
-              >
-                <div className="mb-4 p-3 rounded-full bg-purple-100">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-semibold mb-3 text-zinc-950">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600">{feature.description}</p>
-              </GlassCard>
-            ))}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="flex flex-col items-center text-center p-6 rounded-lg border border-gray-100 shadow-sm">
+              <div className="h-12 w-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
+                <Shield className="h-6 w-6 text-purple-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Secure Banking</h3>
+              <p className="text-gray-700 dark:text-purple-200">
+                Bank with confidence knowing your data is protected with industry-leading security.
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center text-center p-6 rounded-lg border border-gray-100 shadow-sm">
+              <div className="h-12 w-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
+                <CreditCard className="h-6 w-6 text-purple-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Easy Payments</h3>
+              <p className="text-gray-700 dark:text-purple-200">Send money, pay bills, and manage transactions with just a few clicks.</p>
+            </div>
+
+            <div className="flex flex-col items-center text-center p-6 rounded-lg border border-gray-100 shadow-sm">
+              <div className="h-12 w-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
+                <Wallet className="h-6 w-6 text-purple-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Financial Insights</h3>
+              <p className="text-gray-700 dark:text-purple-200">
+                Get detailed analytics and insights to help you make better financial decisions.
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center text-center p-6 rounded-lg border border-gray-100 shadow-sm">
+              <div className="h-12 w-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
+                <Lock className="h-6 w-6 text-purple-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Privacy First</h3>
+              <p className="text-gray-700 dark:text-purple-200">
+                Your privacy matters. We never sell your data or share it with third parties.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Benefits Section */}
-      <section className="section-padding bg-gradient-to-b from-purple-50 to-white">
+      <section className="py-16 md:py-24 bg-card">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-zinc-950">
-                Experience Modern Banking
-              </h2>
-              <p className="text-lg text-gray-700 mb-8">
-                SafeXBank combines cutting-edge technology with user-friendly
-                design to provide you with the best banking experience possible.
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">Experience Modern Banking</h2>
+              <p className="text-lg text-gray-700 dark:text-purple-200 mb-8">
+                SafeXBank combines cutting-edge technology with user-friendly design to provide you with the best
+                banking experience possible.
               </p>
 
               <ul className="space-y-4">
@@ -156,73 +95,41 @@ export default function HomePage() {
                   "Automated savings and budgeting tools",
                   "Dedicated customer support",
                 ].map((benefit, index) => (
-                  <li key={index} className="flex items-start text-zinc-950">
+                  <li key={index} className="flex items-start">
                     <CheckCircle2 className="h-6 w-6 text-purple-600 mr-2 flex-shrink-0" />
                     <span>{benefit}</span>
                   </li>
                 ))}
               </ul>
 
-              {/* <Button asChild className="mt-8">
+              <Button asChild className="mt-8">
                 <Link href="/register">
                   Open an Account <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
-              </Button> */}
+              </Button>
             </div>
 
             <div className="rounded-lg overflow-hidden shadow-xl">
-              <img
-                src="/interface.png"
-                alt="Banking App Interface"
-                className="w-full h-auto"
-              />
+              <img src="/" alt="Banking App Interface" className="w-full h-auto" />
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-r from-purple-700 to-purple-900 text-white">
-        <div className="container-padding">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="heading-2 mb-6">
-                Ready to take control of your finances?
-              </h2>
-              <p className="text-lg text-purple-100 mb-8">
-                Join thousands of customers who have simplified their banking
-                experience with SafeXBank.
-              </p>
-              <Button
-                size="lg"
-                className="bg-white text-purple-800 hover:bg-purple-50 rounded-full">
-                <Link className="flex justify-center" href="/register">Get Started Now <ArrowRight className="ml-2 h-5 w-5" /></Link>
-              </Button>
-            </div>
-            <div className="flex justify-center md:justify-end">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-6 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20">
-                  <Wallet className="h-10 w-10 text-purple-300 mx-auto mb-3" />
-                  <h3 className="text-2xl font-bold mb-1">98%</h3>
-                  <p className="text-purple-200">Satisfaction Rate</p>
-                </div>
-                <div className="text-center p-6 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20">
-                  <DollarSign className="h-10 w-10 text-purple-300 mx-auto mb-3" />
-                  <h3 className="text-2xl font-bold mb-1">$2M+</h3>
-                  <p className="text-purple-200">Transactions Daily</p>
-                </div>
-                <div className="text-center p-6 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20">
-                  <Users className="h-10 w-10 text-purple-300 mx-auto mb-3" />
-                  <h3 className="text-2xl font-bold mb-1">250k+</h3>
-                  <p className="text-purple-200">Active Users</p>
-                </div>
-                <div className="text-center p-6 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20">
-                  <BadgeCheck className="h-10 w-10 text-purple-300 mx-auto mb-3" />
-                  <h3 className="text-2xl font-bold mb-1">100%</h3>
-                  <p className="text-purple-200">Secure & Reliable</p>
-                </div>
-              </div>
-            </div>
+      <section className="py-16 md:py-24  bg-purple-950 text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Get Started?</h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
+            Join thousands of satisfied customers who trust SafeXBank with their finances.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button asChild size="lg" className="bg-white text-purple-700 font-bold hover:bg-purple-100">
+              <Link href="/register">Create Account</Link>
+            </Button>
+            <Button asChild variant="default" size="lg" className=" bg-purple-700 font-bold text-white hover:bg-purple-800">
+              <Link href="/login">Sign In</Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -342,5 +249,6 @@ export default function HomePage() {
         </div>
       </footer>
     </div>
-  );
+  )
 }
+

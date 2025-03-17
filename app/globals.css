@@ -88,21 +88,8 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground overflow-x-hidden;
-    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+    @apply bg-background text-foreground;
   }
-
-  html {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    scroll-behavior: smooth;
-  }  
-
-  ::selection {
-    @apply bg-purple-200 text-purple-900;
-  }
-
-
 }
 
 .gradient-purple {
@@ -113,55 +100,3 @@
   @apply bg-gradient-to-r from-purple-400 to-purple-600;
 }
 
-
-  .glass {
-    @apply bg-white/70 backdrop-blur-lg shadow-glass border border-white/20 transition-all duration-300;
-  }
-  
-  .glass:hover {
-    @apply shadow-glass-hover;
-  }
-
-  .container-padding {
-    @apply px-4 sm:px-6 md:px-8 max-w-7xl mx-auto;
-  }
-
-  .heading-1 {
-    @apply text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight;
-  }
-
-  .heading-2 {
-    @apply text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight;
-  }
-
-  .heading-3 {
-    @apply text-xl sm:text-2xl font-bold tracking-tight;
-  }
-
-  .section-padding {
-    @apply py-16 md:py-24;
-  }
-
-  .focus-ring {
-    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
-  }
-
-  .shimmer {
-    @apply bg-gradient-shimmer bg-[length:200%_100%] animate-shimmer;
-  }
-
-  .page-transition-enter {
-    @apply opacity-0;
-  }
-
-  .page-transition-enter-active {
-    @apply opacity-100 transition-opacity duration-300;
-  }
-
-  .page-transition-exit {
-    @apply opacity-100;
-  }
-
-  .page-transition-exit-active {
-    @apply opacity-0 transition-opacity duration-300;
-  }
