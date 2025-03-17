@@ -167,6 +167,14 @@ export function Navbar() {
                 Payees
               </Link>
               <Link
+                href="/investments"
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  pathname === "/payees" ? "text-primary" : "text-muted-foreground"
+                }`}
+              >
+                investments
+              </Link>
+              <Link
                 href="/history"
                 className={`text-sm font-medium transition-colors hover:text-primary ${
                   pathname === "/history" ? "text-primary" : "text-muted-foreground"
