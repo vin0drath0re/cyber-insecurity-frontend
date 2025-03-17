@@ -4,6 +4,7 @@ export interface Account {
   number: string;
   type: "checking" | "savings" | "investment";
   balance: number;
+  currency: string;
 }
 
 export const accounts: Account[] = [
@@ -13,6 +14,7 @@ export const accounts: Account[] = [
     number: "INV-001",
     type: "investment",
     balance: 25000.0,
+    currency: "USD",
   },
   {
     id: "2",
@@ -20,6 +22,7 @@ export const accounts: Account[] = [
     number: "INV-002",
     type: "investment",
     balance: 45000.0,
+    currency: "USD",
   },
   {
     id: "3",
@@ -27,5 +30,6 @@ export const accounts: Account[] = [
     number: "INV-003",
     type: "investment",
     balance: 15000.0,
+    currency: "USD",
   },
 ];

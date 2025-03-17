@@ -169,19 +169,19 @@ export function Navbar() {
               <Link
                 href="/investments"
                 className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === "/payees" ? "text-primary" : "text-muted-foreground"
+                  pathname === "/investments" ? "text-primary" : "text-muted-foreground"
                 }`}
               >
-                investments
+                Investments
               </Link>
-              <Link
+              {/* <Link
                 href="/history"
                 className={`text-sm font-medium transition-colors hover:text-primary ${
                   pathname === "/history" ? "text-primary" : "text-muted-foreground"
                 }`}
               >
                 History
-              </Link>
+              </Link> */}
             </nav>
           )}
         </div>
