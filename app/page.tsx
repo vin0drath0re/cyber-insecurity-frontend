@@ -32,16 +32,16 @@ export default function HomePage() {
           SafeXBank
         </div> */}
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center bg-gradient-to-b from-white to-purple-50 animate-bounce-once" style={{ animationDelay: "300ms" }}>
+      <section className="relative min-h-screen flex items-center bg-gradient-to-b from-white to-violet-50 animate-bounce-once" style={{ animationDelay: "300ms" }}>
         {/* <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-b from-white to-purple-50"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-white to-violet-50"></div>
         </div> */}
          
         <div className="container-padding py-20">
           <div className="max-w-3xl mx-auto text-center">
          
             <h1 className="heading-1 mb-6 animate-slide-up text-zinc-950">
-              <span className="text-purple-600">Modern Banking</span> For a
+              <span className="text-violet-600">Modern Banking</span> For a
               Modern World
             </h1>
             <p
@@ -58,7 +58,7 @@ export default function HomePage() {
             >
               <Button
                 size="lg"
-                className="bg-purple-600 hover:bg-purple-700 text-white rounded-full"
+                className="bg-violet-600 hover:bg-violet-700 text-white rounded-full"
               >
                 <Link href="/register">Get Started Now</Link>
                 <ArrowRight className="ml-1 h-5 w-5" />
@@ -71,9 +71,9 @@ export default function HomePage() {
         </div>
         <div className="absolute bottom-0 left-0 right-0 mb-4 items-center justify-center flex flex-col">
         <div className="opacity-0 animate-fade-in" style={{animationDelay:"650ms"}}>
-          <span className="text-purple-300 animate-fade-out" style={{animationDelay:"2000ms"}}>Learn More</span>
+          <span className="text-violet-300 animate-fade-out" style={{animationDelay:"2000ms"}}>Learn More</span>
           
-          <ArrowUp className="h-20 w-20 text-purple-300 animate-fade-out" style={{animationDelay:"2000ms"}} />
+          <ArrowUp className="h-20 w-20 text-violet-300 animate-fade-out" style={{animationDelay:"2000ms"}} />
           </div>
           </div>
       </section>
@@ -94,25 +94,25 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
-                icon: <Shield className="h-8 w-8 text-purple-600" />,
+                icon: <Shield className="h-8 w-8 text-violet-600" />,
                 title: "Secure Banking",
                 description:
                   "Bank with confidence knowing your data is protected with industry-leading security.",
               },
               {
-                icon: <CreditCard className="h-8 w-8 text-purple-600" />,
+                icon: <CreditCard className="h-8 w-8 text-violet-600" />,
                 title: "Easy Payments",
                 description:
                   "Send money, pay bills, and manage transactions with just a few clicks.",
               },
               {
-                icon: <BarChart3 className="h-8 w-8 text-purple-600" />,
+                icon: <BarChart3 className="h-8 w-8 text-violet-600" />,
                 title: "Financial Insights",
                 description:
                   "Get detailed analytics and insights to help you make better financial decisions.",
               },
               {
-                icon: <Lock className="h-8 w-8 text-purple-600" />,
+                icon: <Lock className="h-8 w-8 text-violet-600" />,
                 title: "Privacy First",
                 description:
                   "Your privacy matters. We never sell your data or share it with third parties.",
@@ -122,7 +122,7 @@ export default function HomePage() {
                 key={index}
                 className="p-6 flex flex-col items-center text-center h-full"
               >
-                <div className="mb-4 p-3 rounded-full bg-purple-100">
+                <div className="mb-4 p-3 rounded-full bg-violet-100">
                   {feature.icon}
                 </div>
                 <h3 className="text-xl font-semibold mb-3 text-zinc-950">
@@ -136,7 +136,7 @@ export default function HomePage() {
       </section>
 
       {/* Benefits Section */}
-      <section className="section-padding bg-gradient-to-b from-purple-50 to-white">
+      <section className="section-padding bg-gradient-to-b from-violet-50 to-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -157,7 +157,7 @@ export default function HomePage() {
                   "Dedicated customer support",
                 ].map((benefit, index) => (
                   <li key={index} className="flex items-start text-zinc-950">
-                    <CheckCircle2 className="h-6 w-6 text-purple-600 mr-2 flex-shrink-0" />
+                    <CheckCircle2 className="h-6 w-6 text-violet-600 mr-2 flex-shrink-0" />
                     <span>{benefit}</span>
                   </li>
                 ))}
@@ -182,44 +182,44 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-r from-purple-700 to-purple-900 text-white">
+      <section className="section-padding bg-gradient-to-r from-violet-700 to-violet-900 text-white">
         <div className="container-padding">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="heading-2 mb-6">
                 Ready to take control of your finances?
               </h2>
-              <p className="text-lg text-purple-100 mb-8">
+              <p className="text-lg text-violet-100 mb-8">
                 Join thousands of customers who have simplified their banking
                 experience with SafeXBank.
               </p>
               <Button
                 size="lg"
-                className="bg-white text-purple-800 hover:bg-purple-50 rounded-full">
+                className="bg-white text-violet-800 hover:bg-violet-50 rounded-full">
                 <Link className="flex justify-center" href="/register">Get Started Now <ArrowRight className="ml-2 h-5 w-5" /></Link>
               </Button>
             </div>
             <div className="flex justify-center md:justify-end">
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center p-6 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20">
-                  <Wallet className="h-10 w-10 text-purple-300 mx-auto mb-3" />
+                  <Wallet className="h-10 w-10 text-violet-300 mx-auto mb-3" />
                   <h3 className="text-2xl font-bold mb-1">98%</h3>
-                  <p className="text-purple-200">Satisfaction Rate</p>
+                  <p className="text-violet-200">Satisfaction Rate</p>
                 </div>
                 <div className="text-center p-6 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20">
-                  <DollarSign className="h-10 w-10 text-purple-300 mx-auto mb-3" />
+                  <DollarSign className="h-10 w-10 text-violet-300 mx-auto mb-3" />
                   <h3 className="text-2xl font-bold mb-1">$2M+</h3>
-                  <p className="text-purple-200">Transactions Daily</p>
+                  <p className="text-violet-200">Transactions Daily</p>
                 </div>
                 <div className="text-center p-6 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20">
-                  <Users className="h-10 w-10 text-purple-300 mx-auto mb-3" />
+                  <Users className="h-10 w-10 text-violet-300 mx-auto mb-3" />
                   <h3 className="text-2xl font-bold mb-1">250k+</h3>
-                  <p className="text-purple-200">Active Users</p>
+                  <p className="text-violet-200">Active Users</p>
                 </div>
                 <div className="text-center p-6 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20">
-                  <BadgeCheck className="h-10 w-10 text-purple-300 mx-auto mb-3" />
+                  <BadgeCheck className="h-10 w-10 text-violet-300 mx-auto mb-3" />
                   <h3 className="text-2xl font-bold mb-1">100%</h3>
-                  <p className="text-purple-200">Secure & Reliable</p>
+                  <p className="text-violet-200">Secure & Reliable</p>
                 </div>
               </div>
             </div>
@@ -235,22 +235,22 @@ export default function HomePage() {
               <h3 className="text-lg font-semibold mb-4">SafeXBank</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="#" className="hover:text-purple-300">
+                  <Link href="#" className="hover:text-violet-300">
                     About Us
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-purple-300">
+                  <Link href="#" className="hover:text-violet-300">
                     Careers
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-purple-300">
+                  <Link href="#" className="hover:text-violet-300">
                     Press
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-purple-300">
+                  <Link href="#" className="hover:text-violet-300">
                     Blog
                   </Link>
                 </li>
@@ -261,22 +261,22 @@ export default function HomePage() {
               <h3 className="text-lg font-semibold mb-4">Products</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="#" className="hover:text-purple-300">
+                  <Link href="#" className="hover:text-violet-300">
                     Checking
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-purple-300">
+                  <Link href="#" className="hover:text-violet-300">
                     Savings
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-purple-300">
+                  <Link href="#" className="hover:text-violet-300">
                     Credit Cards
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-purple-300">
+                  <Link href="#" className="hover:text-violet-300">
                     Loans
                   </Link>
                 </li>
@@ -287,22 +287,22 @@ export default function HomePage() {
               <h3 className="text-lg font-semibold mb-4">Resources</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="#" className="hover:text-purple-300">
+                  <Link href="#" className="hover:text-violet-300">
                     Help Center
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-purple-300">
+                  <Link href="#" className="hover:text-violet-300">
                     FAQs
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-purple-300">
+                  <Link href="#" className="hover:text-violet-300">
                     Security
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-purple-300">
+                  <Link href="#" className="hover:text-violet-300">
                     Contact Us
                   </Link>
                 </li>
@@ -313,22 +313,22 @@ export default function HomePage() {
               <h3 className="text-lg font-semibold mb-4">Legal</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="#" className="hover:text-purple-300">
+                  <Link href="#" className="hover:text-violet-300">
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-purple-300">
+                  <Link href="#" className="hover:text-violet-300">
                     Terms of Service
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-purple-300">
+                  <Link href="#" className="hover:text-violet-300">
                     Cookie Policy
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-purple-300">
+                  <Link href="#" className="hover:text-violet-300">
                     Licenses
                   </Link>
                 </li>
