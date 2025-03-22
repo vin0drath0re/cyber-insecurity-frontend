@@ -25,22 +25,10 @@ const config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        nav: "hsl(var(--nav))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
-        },
-        purple: {
-          50: '#f5f3ff',
-          100: '#ede9fe',
-          200: '#ddd6fe',
-          300: '#c4b5fd',
-          400: '#a78bfa',
-          500: '#8b5cf6', 
-          600: '#7c3aed',
-          700: '#6d28d9',
-          800: '#5b21b6',
-          900: '#4c1d95',
-          950: '#2e1065',
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -74,6 +62,7 @@ const config = {
           accent: "hsl(var(--sidebar-accent))",
           "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
         },
+        
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -136,6 +125,9 @@ const config = {
         'glass': '0 4px 30px rgba(0, 0, 0, 0.1)',
         'glass-hover': '0 8px 32px rgba(0, 0, 0, 0.15)',
         'card': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        'soft': '0 4px 20px rgba(0, 0, 0, 0.05)',
+				'strong': '0 8px 30px rgba(0, 0, 0, 0.12)',
+				'purple-glow': '0 8px 40px rgba(111, 89, 165, 0.3)'
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

@@ -54,6 +54,15 @@ export function Navbar() {
     }
   }
 
+  const pages = [
+    { name: "Dashboard", href: "/dashboard" },
+    { name: "Transactions", href: "/transactions" },
+    { name: "Payees", href: "/payees" },
+    { name: "Investments", href: "/investments" },
+    { name: "Loans", href: "/loans" },
+    { name: "Profile", href: "/profile" },
+  ]
+
   return (
     <header
       className={`sticky top-0 z-50 w-full border-b ${isHomePage ? "bg-transparent border-transparent" : "bg-background border-border"}`}
@@ -78,56 +87,19 @@ export function Navbar() {
                   </div>
                   <div className="flex-1 overflow-auto py-2">
                     <nav className="grid gap-1 px-2">
-                      <Link
-                        href="/dashboard"
-                        className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${
-                          pathname === "/dashboard"
-                            ? "bg-primary text-primary-foreground"
-                            : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                        }`}
-                      >
-                        Dashboard
-                      </Link>
-                      <Link
-                        href="/transactions"
-                        className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${
-                          pathname === "/transactions"
-                            ? "bg-primary text-primary-foreground"
-                            : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                        }`}
-                      >
-                        Transactions
-                      </Link>
-                      <Link
-                        href="/payees"
-                        className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${
-                          pathname === "/payees"
-                            ? "bg-primary text-primary-foreground"
-                            : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                        }`}
-                      >
-                        Payees
-                      </Link>
-                      <Link
-                        href="/history"
-                        className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${
-                          pathname === "/history"
-                            ? "bg-primary text-primary-foreground"
-                            : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                        }`}
-                      >
-                        History
-                      </Link>
-                      <Link
-                        href="/profile"
-                        className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${
-                          pathname === "/profile"
-                            ? "bg-primary text-primary-foreground"
-                            : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                        }`}
-                      >
-                        Profile
-                      </Link>
+                      {pages.map((page) => (
+                        <Link
+                          key={page.name}
+                          href={page.href}
+                          className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${
+                            pathname === page.href
+                              ? "bg-primary text-primary-foreground"
+                              : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                          }`}
+                        >
+                          {page.name}
+                        </Link>
+                      ))}
                     </nav>
                   </div>
                 </div>
@@ -142,46 +114,17 @@ export function Navbar() {
 
           {!isHomePage && (
             <nav className="hidden md:flex items-center gap-6 ml-6">
-              <Link
-                href="/dashboard"
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === "/dashboard" ? "text-primary" : "text-muted-foreground"
-                }`}
-              >
-                Dashboard
-              </Link>
-              <Link
-                href="/transactions"
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === "/transactions" ? "text-primary" : "text-muted-foreground"
-                }`}
-              >
-                Transactions
-              </Link>
-              <Link
-                href="/payees"
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === "/payees" ? "text-primary" : "text-muted-foreground"
-                }`}
-              >
-                Payees
-              </Link>
-              <Link
-                href="/investments"
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === "/investments" ? "text-primary" : "text-muted-foreground"
-                }`}
-              >
-                Investments
-              </Link>
-              {/* <Link
-                href="/history"
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === "/history" ? "text-primary" : "text-muted-foreground"
-                }`}
-              >
-                History
-              </Link> */}
+              {pages.slice(0,-1).map((page) => (
+                <Link
+                  key={page.name}
+                  href={page.href}
+                  className={`text-sm font-medium transition-colors hover:text-foreground ${
+                    pathname === page.href ? "text-nav hover:text-nav" : "text-muted-foreground"
+                  }`}
+                >
+                  {page.name}
+                </Link>
+              ))}
             </nav>
           )}
         </div>

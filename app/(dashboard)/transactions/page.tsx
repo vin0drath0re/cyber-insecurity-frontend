@@ -1,13 +1,35 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { CalendarIcon, ChevronLeft, ChevronRight, Download, Filter, Search } from "lucide-react"
+import { useState } from "react";
+import {
+  ArrowDown,
+  ArrowLeftRight,
+  ArrowUp,
+  CalendarIcon,
+  ChevronDown,
+  ChevronUp,
+  Download,
+  Filter,
+  Search,
+} from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import {
   Pagination,
   PaginationContent,
@@ -16,26 +38,26 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Calendar } from "@/components/ui/calendar"
-import { format } from "date-fns"
+} from "@/components/ui/pagination";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
 
 // Sample transaction history data
 const transactionHistory = Array.from({ length: 50 }, (_, i) => {
-  const types = ["Deposit", "Withdrawal", "Transfer", "Payment", "Refund"]
+  const types = ["Deposit", "Withdrawal", "Transfer"];
   const categories = [
-    "Income",
-    "Groceries",
-    "Utilities",
-    "Entertainment",
-    "Transportation",
-    "Housing",
+    "People",
     "Shopping",
-    "Dining",
-    "Health",
+    "Entertainment",
+    "Housing",
+    "Food",
     "Other",
-  ]
+  ];
   const descriptions = [
     "Salary Deposit",
     "Grocery Store",
@@ -48,17 +70,21 @@ const transactionHistory = Array.from({ length: 50 }, (_, i) => {
     "Restaurant Payment",
     "Gym Membership",
     "Insurance Premium",
-  ]
-  const statuses = ["Completed", "Pending", "Failed"]
+  ];
+  const statuses = ["Completed", "Pending", "Failed"];
 
-  const date = new Date()
-  date.setDate(date.getDate() - i)
+  const date = new Date();
+  date.setDate(date.getDate() - i);
 
-  const type = types[Math.floor(Math.random() * types.length)]
-  const category = categories[Math.floor(Math.random() * categories.length)]
-  const description = descriptions[Math.floor(Math.random() * descriptions.length)]
-  const status = statuses[Math.floor(Math.random() * statuses.length)]
-  const amount = type === "Deposit" || type === "Refund" ? Math.random() * 1000 + 10 : -(Math.random() * 500 + 10)
+  const type = types[Math.floor(Math.random() * types.length)];
+  const category = categories[Math.floor(Math.random() * categories.length)];
+  const description =
+    descriptions[Math.floor(Math.random() * descriptions.length)];
+  const status = statuses[Math.floor(Math.random() * statuses.length)];
+  const amount =
+    type === "Deposit" || type === "Refund"
+      ? Math.random() * 1000 + 10
+      : -(Math.random() * 500 + 10);
 
   return {
     id: `TH-${1000 + i}`,
@@ -69,50 +95,72 @@ const transactionHistory = Array.from({ length: 50 }, (_, i) => {
     amount,
     status,
     reference: `REF-${Math.floor(Math.random() * 1000000)}`,
-  }
-})
+  };
+});
 
 export default function HistoryPage() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [typeFilter, setTypeFilter] = useState<string>("all")
-  const [categoryFilter, setCategoryFilter] = useState<string>("all")
-  const [statusFilter, setStatusFilter] = useState<string>("all")
-  const [date, setDate] = useState<Date | undefined>(undefined)
-  const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 10
+  const [searchTerm, setSearchTerm] = useState("");
+  const [typeFilter, setTypeFilter] = useState<string>("all");
+  const [categoryFilter, setCategoryFilter] = useState<string>("all");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [date, setDate] = useState<Date | undefined>(undefined);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   // Filter transactions
   const filteredTransactions = transactionHistory.filter((transaction) => {
     const matchesSearch =
-      transaction.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      transaction.reference.toLowerCase().includes(searchTerm.toLowerCase())
+      transaction.description
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      transaction.reference.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      transaction.category.toLowerCase().includes(searchTerm.toLowerCase());
 
-    const matchesType = typeFilter === "all" || transaction.type === typeFilter
+    const matchesType = typeFilter === "all" || transaction.type === typeFilter;
 
-    const matchesCategory = categoryFilter === "all" || transaction.category === categoryFilter
+    const matchesCategory =
+      categoryFilter === "all" || transaction.category === categoryFilter;
 
-    const matchesStatus = statusFilter === "all" || transaction.status === statusFilter
+    const matchesStatus =
+      statusFilter === "all" || transaction.status === statusFilter;
 
-    const matchesDate = !date || transaction.date === format(date, "MMM dd, yyyy")
+    const matchesDate =
+      !date || transaction.date === format(date, "MMM dd, yyyy");
 
-    return matchesSearch && matchesType && matchesCategory && matchesStatus && matchesDate
-  })
+    return (
+      matchesSearch &&
+      matchesType &&
+      matchesCategory &&
+      matchesStatus &&
+      matchesDate
+    );
+  });
 
   // Pagination
-  const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage)
-  const paginatedTransactions = filteredTransactions.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+  const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
+  const paginatedTransactions = filteredTransactions.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   // Get unique types, categories, and statuses for filters
-  const types = ["all", ...new Set(transactionHistory.map((t) => t.type))]
-  const categories = ["all", ...new Set(transactionHistory.map((t) => t.category))]
-  const statuses = ["all", ...new Set(transactionHistory.map((t) => t.status))]
+  const types = ["all", ...new Set(transactionHistory.map((t) => t.type))];
+  const categories = [
+    "all",
+    ...new Set(transactionHistory.map((t) => t.category)),
+  ];
+  const statuses = ["all", ...new Set(transactionHistory.map((t) => t.status))];
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Transaction History</h1>
-          <p className="text-muted-foreground">View your complete transaction history.</p>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Transaction History
+          </h1>
+          <p className="text-muted-foreground">
+            View your complete transaction history.
+          </p>
         </div>
         <div className="flex gap-2">
           <Popover>
@@ -123,7 +171,12 @@ export default function HistoryPage() {
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="end">
-              <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                initialFocus
+              />
             </PopoverContent>
           </Popover>
           <Button variant="outline">
@@ -134,12 +187,8 @@ export default function HistoryPage() {
       </div>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Transaction History</CardTitle>
-          <CardDescription>A complete record of all your past transactions.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col md:flex-row gap-4 mb-6">
+        <CardContent className="p-6">
+          <div className="flex flex-col sm:flex-row gap-4 mb-6">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
@@ -187,7 +236,12 @@ export default function HistoryPage() {
                 </SelectContent>
               </Select>
               {date && (
-                <Button variant="outline" size="icon" onClick={() => setDate(undefined)} title="Clear date filter">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setDate(undefined)}
+                  title="Clear date filter"
+                >
                   <Filter className="h-4 w-4" />
                 </Button>
               )}
@@ -203,14 +257,16 @@ export default function HistoryPage() {
               paginatedTransactions.map((transaction) => (
                 <div
                   key={transaction.id}
-                  className="flex flex-col md:flex-row md:items-center justify-between p-4 rounded-lg border"
+                  className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-lg border"
                 >
-                  <div className="flex flex-col md:flex-row md:items-center gap-4 mb-2 md:mb-0">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-2 sm:mb-0">
                     <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                      {transaction.type === "Deposit" || transaction.type === "Refund" ? (
-                        <ChevronRight className="h-6 w-6 text-emerald-500" />
+                      {transaction.type === "Deposit" ? (
+                        <ArrowUp className="h-6 w-6 text-emerald-600" />
+                      ) : transaction.type === "Withdrawal" ? (
+                        <ArrowDown className="h-6 w-6 text-rose-600" />
                       ) : (
-                        <ChevronLeft className="h-6 w-6 text-rose-500" />
+                        <ArrowLeftRight className="h-6 w-6 text-blue-600" />
                       )}
                     </div>
                     <div>
@@ -222,8 +278,8 @@ export default function HistoryPage() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col md:flex-row md:items-center gap-4">
-                    <div className="flex flex-col md:items-end">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                    <div className="flex flex-col sm:items-end">
                       <span
                         className={`font-bold ${
                           transaction.amount > 0
@@ -231,22 +287,23 @@ export default function HistoryPage() {
                             : "text-rose-600 dark:text-rose-500"
                         }`}
                       >
-                        {transaction.amount > 0 ? "+" : ""}${Math.abs(transaction.amount).toFixed(2)}
+                        {transaction.amount > 0 ? "+" : ""}$
+                        {Math.abs(transaction.amount).toFixed(2)}
                       </span>
-                      <span className="text-sm text-muted-foreground">{transaction.category}</span>
                     </div>
-                    <Badge
-                      variant={
-                        transaction.status === "Completed"
-                          ? "default"
-                          : transaction.status === "Pending"
+                    <div className="flex justify-center" style={{minWidth: "6.5rem"}}>
+                      <Badge
+                        variant={
+                          transaction.status === "Completed"
+                            ? "default"
+                            : transaction.status === "Pending"
                             ? "outline"
                             : "destructive"
-                      }
-                      className="md:ml-4"
-                    >
-                      {transaction.status}
-                    </Badge>
+                        }
+                        className="sm:ml-4 flex sm:justify-center">
+                        <span>{transaction.category}</span>
+                      </Badge>
+                    </div>
                   </div>
                 </div>
               ))
@@ -260,27 +317,27 @@ export default function HistoryPage() {
                   <PaginationPrevious
                     href="#"
                     onClick={(e) => {
-                      e.preventDefault()
-                      setCurrentPage(Math.max(1, currentPage - 1))
+                      e.preventDefault();
+                      setCurrentPage(Math.max(1, currentPage - 1));
                     }}
                   />
                 </PaginationItem>
                 {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                  const pageNumber = i + 1
+                  const pageNumber = i + 1;
                   return (
                     <PaginationItem key={pageNumber}>
                       <PaginationLink
                         href="#"
                         isActive={pageNumber === currentPage}
                         onClick={(e) => {
-                          e.preventDefault()
-                          setCurrentPage(pageNumber)
+                          e.preventDefault();
+                          setCurrentPage(pageNumber);
                         }}
                       >
                         {pageNumber}
                       </PaginationLink>
                     </PaginationItem>
-                  )
+                  );
                 })}
                 {totalPages > 5 && (
                   <>
@@ -292,8 +349,8 @@ export default function HistoryPage() {
                         href="#"
                         isActive={totalPages === currentPage}
                         onClick={(e) => {
-                          e.preventDefault()
-                          setCurrentPage(totalPages)
+                          e.preventDefault();
+                          setCurrentPage(totalPages);
                         }}
                       >
                         {totalPages}
@@ -305,8 +362,8 @@ export default function HistoryPage() {
                   <PaginationNext
                     href="#"
                     onClick={(e) => {
-                      e.preventDefault()
-                      setCurrentPage(Math.min(totalPages, currentPage + 1))
+                      e.preventDefault();
+                      setCurrentPage(Math.min(totalPages, currentPage + 1));
                     }}
                   />
                 </PaginationItem>
@@ -316,6 +373,5 @@ export default function HistoryPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
-

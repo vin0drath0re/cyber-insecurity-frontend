@@ -28,7 +28,7 @@ export default function HomePage() {
   }, [setTheme]);
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      {/* <div className="heading-1 flex items-center justify-center text-zinc-950 font-bold h-20">
+      {/* <div className="heading-lg flex items-center justify-center text-zinc-950 font-bold h-20">
           SafeXBank
         </div> */}
       {/* Hero Section */}
@@ -40,7 +40,7 @@ export default function HomePage() {
         <div className="container-padding py-20">
           <div className="max-w-3xl mx-auto text-center">
          
-            <h1 className="heading-1 mb-6 animate-slide-up text-zinc-950">
+            <h1 className="heading-lg mb-6 animate-slide-up text-zinc-950">
               <span className="text-violet-600">Modern Banking</span> For a
               Modern World
             </h1>
@@ -120,6 +120,7 @@ export default function HomePage() {
             ].map((feature, index) => (
               <GlassCard
                 key={index}
+                delay={index * 100}
                 className="p-6 flex flex-col items-center text-center h-full"
               >
                 <div className="mb-4 p-3 rounded-full bg-violet-100">
@@ -186,7 +187,7 @@ export default function HomePage() {
         <div className="container-padding">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="heading-2 mb-6">
+              <h2 className="heading-md mb-6">
                 Ready to take control of your finances?
               </h2>
               <p className="text-lg text-violet-100 mb-8">

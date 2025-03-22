@@ -103,6 +103,7 @@ export default function PayeesPage() {
   const [newPayee, setNewPayee] = useState({
     name: "",
     accountNumber: "",
+    ifsc: "",
     type: "Utility",
   })
 
@@ -132,6 +133,7 @@ export default function PayeesPage() {
         name: "",
         accountNumber: "",
         type: "Utility",
+        ifsc: "",
       })
       setIsAddPayeeOpen(false)
     }
@@ -191,19 +193,31 @@ export default function PayeesPage() {
                 />
               </div>
               <div className="grid gap-2">
+                <Label htmlFor="ifsc">IFSC Code</Label>
+                <Input
+                  id="ifsc"
+                  value={newPayee.ifsc}
+                  onChange={(e) =>
+                    setNewPayee({
+                      ...newPayee,
+                      ifsc: e.target.value,
+                    })
+                  }
+                  placeholder="Enter account number"
+                />
+              </div>
+              <div className="grid gap-2">
                 <Label htmlFor="type">Payee Type</Label>
                 <Select value={newPayee.type} onValueChange={(value) => setNewPayee({ ...newPayee, type: value })}>
                   <SelectTrigger id="type">
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Utility">Utility</SelectItem>
-                    <SelectItem value="Housing">Housing</SelectItem>
-                    <SelectItem value="Financial">Financial</SelectItem>
-                    <SelectItem value="Insurance">Insurance</SelectItem>
-                    <SelectItem value="Health">Health</SelectItem>
-                    <SelectItem value="Entertainment">Entertainment</SelectItem>
-                    <SelectItem value="Other">Other</SelectItem>
+                    <SelectItem value="SHOPPING">Shopping</SelectItem>
+                    <SelectItem value="ENTERTAINMENT">Entertainment</SelectItem>
+                    <SelectItem value="HOUSING">Housing</SelectItem>
+                    <SelectItem value="FOOD">Food</SelectItem>
+                    <SelectItem value="OTHER">Other</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
