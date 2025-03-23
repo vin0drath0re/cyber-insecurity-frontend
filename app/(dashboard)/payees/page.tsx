@@ -104,7 +104,7 @@ export default function PayeesPage() {
     name: "",
     accountNumber: "",
     ifsc: "",
-    type: "Utility",
+    type: "OTHER",
   })
 
   // Filter payees based on search term
@@ -132,7 +132,7 @@ export default function PayeesPage() {
       setNewPayee({
         name: "",
         accountNumber: "",
-        type: "Utility",
+        type: "OTHER",
         ifsc: "",
       })
       setIsAddPayeeOpen(false)

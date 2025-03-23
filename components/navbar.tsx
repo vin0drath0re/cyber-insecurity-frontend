@@ -76,7 +76,7 @@ export function Navbar() {
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="p-0 bg-sidebar">
+              <SheetContent aria-describedby={undefined} side="left" className="p-0 bg-sidebar">
                 <div className="h-full flex flex-col">
                   <div className="p-6 border-b border-sidebar-border">
                     <div className="flex items-center gap-2">
