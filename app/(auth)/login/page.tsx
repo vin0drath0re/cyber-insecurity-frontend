@@ -1,8 +1,7 @@
 "use client";
 
 import type React from "react";
-
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
@@ -40,14 +39,10 @@ export const login = async (email: string, password: string) => {
   }
 };
 
-
-
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
-  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,6 +50,8 @@ export default function LoginPage() {
 
     const email = (e.target as any).email.value;
     const password = (e.target as any).password.value;
+
+    
 
     const result = await login(email, password);
 
@@ -93,7 +90,6 @@ export default function LoginPage() {
   };
 
   return (
-    
     <Card className="shadow-lg border-border border bg-card">
       <Button onClick={checkHandler}>Hello</Button>
       <CardHeader className="space-y-1">
