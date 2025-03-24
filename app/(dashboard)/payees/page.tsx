@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Building, Check, Edit, MoreHorizontal, Plus, Search, Trash, User } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -19,6 +19,7 @@ import {
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { UserData } from "@/components/context/UserContext"
 
 // Sample payees data
 const initialPayees = [
@@ -107,6 +108,13 @@ export default function PayeesPage() {
     type: "OTHER",
   })
 
+  const { fetchPayees, AddPayeeById, EditPayee, DeletePayee, CheckPayeeName , PayeeName } = UserData();
+
+  const payerCustomerId = "e48d6144-972e-4572-b6fa-747a22d814d3";
+  useEffect(() => {
+    fetchPayees(payerCustomerId);
+  }, []);
+
   // Filter payees based on search term
   const filteredPayees = payees.filter(
     (payee) =>
@@ -116,33 +124,52 @@ export default function PayeesPage() {
   )
 
   // Handle adding a new payee
-  const handleAddPayee = () => {
-    if (newPayee.name && newPayee.accountNumber && newPayee.type) {
-      const id = `P-${Math.floor(Math.random() * 10000)}`
-      setPayees([
-        ...payees,
-        {
-          id,
-          ...newPayee,
-          lastPayment: "N/A",
-          amount: 0,
-          isFrequent: false,
-        },
-      ])
-      setNewPayee({
-        name: "",
-        accountNumber: "",
-        type: "OTHER",
-        ifsc: "",
-      })
-      setIsAddPayeeOpen(false)
+  const handleAddPayee = async () => {
+    if (newPayee.name && newPayee.accountNumber && newPayee.ifsc) {
+      try {
+        await AddPayeeById(payerCustomerId, newPayee.name, newPayee.ifsc, newPayee.accountNumber, newPayee.type);
+        setNewPayee({
+          name: "",
+          accountNumber: "",
+          type: "OTHER",
+          ifsc: "",
+        });
+        setIsAddPayeeOpen(false);
+        fetchPayees(payerCustomerId); // Refresh the payees list
+      } catch (error) {
+        console.error("Error adding payee:", error);
+      }
     }
-  }
+  };
 
-  // Handle deleting a payee
-  const handleDeletePayee = (id: string) => {
-    setPayees(payees.filter((payee) => payee.id !== id))
-  }
+  // Handle editing a payee
+  const handleEditPayee = async (id: string, updatedPayee: { name: string; accountNumber: string; ifsc: string; type: string }) => {
+    try {
+      await EditPayee(payerCustomerId, updatedPayee.name, updatedPayee.ifsc, updatedPayee.accountNumber, updatedPayee.type);
+      fetchPayees(payerCustomerId); // Refresh the payees list
+    } catch (error) {
+      console.error("Error editing payee:", error);
+    }
+  };
+
+  //Handle deleting a payee
+  const handleDeletePayee = async (payeeAccNo: string) => {
+    try {
+      await DeletePayee(payerCustomerId, payeeAccNo);
+      fetchPayees(payerCustomerId);
+    } catch (error) {
+      console.error("Error deleting payee:", error);
+    }
+  };
+
+  // Handle checking payee name
+  const handleCheckPayeeName = async (payeeifsc: string, accountNumber: string) => {
+    try {
+      await CheckPayeeName(payeeifsc, accountNumber);
+    } catch (error) {
+      console.error("Error checking payee name:", error);
+    }
+  };
 
   // Handle marking a payee as frequent
   const handleToggleFrequent = (id: string) => {

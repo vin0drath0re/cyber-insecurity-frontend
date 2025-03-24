@@ -88,7 +88,7 @@ export function BankSidebar() {
           </Button> */}
         </SheetTrigger>
         
-        <SheetContent side="left" className="p-0 bg-sidebar">
+        <SheetContent aria-describedby={undefined} side="left" className="p-0 bg-sidebar">
           <SheetHeader>
               <SheetTitle></SheetTitle>
           </SheetHeader>
