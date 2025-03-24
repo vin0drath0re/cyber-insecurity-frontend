@@ -62,7 +62,6 @@ export default function VerifyOTPPage() {
               maxLength={6}
               value={otp}
               onChange={(value) => setOTP(value)}
-              pattern="^\d+$"
             >
               <InputOTPGroup>
                 {Array.from({ length: 6 }).map((_, i) => (

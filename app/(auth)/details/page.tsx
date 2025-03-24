@@ -64,7 +64,7 @@ export default function DetailsPage() {
             <Label htmlFor="password">Password</Label>
             <div className="relative">
               <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input id="password" type={showPassword ? "text" : "password"} required className="pl-10" />
+              <Input id="password" type={showPassword ? "text" : "password"} required className="pl-10" autoComplete="true" />
               <Button
                 type="button"
                 variant="ghost"
@@ -72,7 +72,7 @@ export default function DetailsPage() {
                 className="absolute right-0 top-0 h-full px-3 py-2 text-muted-foreground"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4"/>}
                 <span className="sr-only">{showPassword ? "Hide password" : "Show password"}</span>
               </Button>
             </div>
@@ -81,7 +81,7 @@ export default function DetailsPage() {
             <Label htmlFor="confirmPassword">Confirm Password</Label>
             <div className="relative">
               <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input id="confirmPassword" type={showConfirmPassword ? "text" : "password"} required className="pl-10" />
+              <Input id="confirmPassword" type={showConfirmPassword ? "text" : "password"} required className="pl-10" autoComplete="true"/>
               <Button
                 type="button"
                 variant="ghost"
