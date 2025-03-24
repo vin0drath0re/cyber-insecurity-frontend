@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
@@ -19,24 +19,83 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+export const login = async (email: string, password: string) => {
+  try {
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message);
+      }
+
+      return await response.json();
+  } catch (error) {
+      console.error(error);
+      return null;
+  }
+};
+
+
+
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
+  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate login
-    setTimeout(() => {
-      setIsLoading(false);
+    const email = (e.target as any).email.value;
+    const password = (e.target as any).password.value;
+
+    const result = await login(email, password);
+
+    console.log(result)
+
+    setIsLoading(false);
+
+    if (result) {
       router.push("/dashboard");
-    }, 1500);
+    } else {
+      alert("Login failed. Please check your credentials and try again.");
+    }
+  };
+
+  const checkHandler = async () => {
+    try {
+      console.log("Starting fetch request...");
+      const response = await fetch("http://localhost:5000/", {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include' // Ensure credentials are included
+      });
+      console.log("Fetch request completed.");
+
+      if (!response.ok) {
+        console.error("Network response was not ok", response.statusText);
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      console.log("Response data:", data);
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
   };
 
   return (
+    
     <Card className="shadow-lg border-border border bg-card">
+      <Button onClick={checkHandler}>Hello</Button>
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold text-center text-primary">
           Welcome to SafeXBank

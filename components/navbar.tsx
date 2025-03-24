@@ -56,6 +56,7 @@ export function Navbar() {
 
   const pages = [
     { name: "Dashboard", href: "/dashboard" },
+    { name: "Accounts", href: "/accounts" },
     { name: "Transactions", href: "/transactions" },
     { name: "Payees", href: "/payees" },
     { name: "Investments", href: "/investments" },
@@ -132,48 +133,13 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           {!isHomePage && (
             <>
-              {isSearchOpen ? (
-                <form onSubmit={handleSearch} className="relative hidden md:flex">
-                  <Input
-                    type="search"
-                    placeholder="Search..."
-                    className="w-[200px] pr-8"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    autoFocus
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="absolute right-0 top-0 h-full"
-                    onClick={() => setIsSearchOpen(false)}
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                </form>
-              ) : (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="hidden md:flex"
-                  onClick={() => setIsSearchOpen(true)}
-                  aria-label="Search"
-                >
-                  <Search className="h-5 w-5" />
-                </Button>
-              )}
+              
 
               <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="Toggle theme">
                 {isMounted && theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
               </Button>
 
-              <Button variant="ghost" size="icon" aria-label="Notifications" className="relative">
-                <Bell className="h-5 w-5" />
-                <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center">
-                  3
-                </Badge>
-              </Button>
+
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -193,7 +159,6 @@ export function Navbar() {
                       Profile
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>Settings</DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
                     <Link href="/login">Sign out</Link>

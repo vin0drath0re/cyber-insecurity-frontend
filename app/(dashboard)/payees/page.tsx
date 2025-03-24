@@ -26,7 +26,7 @@ const initialPayees = [
     id: "P-1234",
     name: "Electric Company",
     accountNumber: "AC-98765432",
-    type: "Utility",
+    type: "Other",
     lastPayment: "Mar 8, 2025",
     amount: 85.75,
     isFrequent: true,
@@ -44,7 +44,7 @@ const initialPayees = [
     id: "P-1236",
     name: "Internet Provider",
     accountNumber: "IP-56781234",
-    type: "Utility",
+    type: "Other",
     lastPayment: "Mar 5, 2025",
     amount: 65.0,
     isFrequent: true,
@@ -53,7 +53,7 @@ const initialPayees = [
     id: "P-1237",
     name: "Cell Phone Company",
     accountNumber: "CP-43218765",
-    type: "Utility",
+    type: "Other",
     lastPayment: "Mar 10, 2025",
     amount: 95.5,
     isFrequent: true,
@@ -261,7 +261,7 @@ export default function PayeesPage() {
                       <Avatar>
                         <AvatarFallback
                           className={
-                            payee.type === "Utility"
+                            payee.type === "Other"
                               ? "bg-blue-500"
                               : payee.type === "Housing"
                                 ? "bg-green-500"
@@ -270,7 +270,7 @@ export default function PayeesPage() {
                                   : "bg-orange-500"
                           }
                         >
-                          {payee.type === "Utility" || payee.type === "Housing" ? (
+                          {payee.type === "Other" || payee.type === "Housing" ? (
                             <Building className="h-4 w-4 text-white" />
                           ) : (
                             <User className="h-4 w-4 text-white" />
