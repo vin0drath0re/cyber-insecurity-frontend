@@ -19,6 +19,9 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { UserData } from "@/components/context/UserContext"
+import { accounts } from '@/data/mockData';
+
+import PaymentModal from "@/components/modals/PaymentModal"
 
 export default function PayeesPage() {
   // State management
@@ -37,6 +40,8 @@ export default function PayeesPage() {
     ifsc: "",
     payeeType: "OTHERS"
   })
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [payeeAccNo, setPayeeAccNo] = useState("")
 
   // Context functions
   const {
@@ -114,6 +119,8 @@ export default function PayeesPage() {
       console.error("Error checking payee name:", error)
     }
   }
+
+  const handlePayment = ()=>{}
 
   
 
@@ -293,7 +300,9 @@ export default function PayeesPage() {
                         <p className="font-medium">N/A</p>
                       </div>
                     </div>
-                    <Button className="w-full mt-4">Pay Now</Button>
+                    <Button className="w-full mt-4" onClick={()=>{setShowPaymentModal(true);
+                      setPayeeAccNo(payee.payeeAccNo);
+                    }}>Pay Now</Button>
                   </CardContent>
                 </Card>
               ))
@@ -358,7 +367,7 @@ export default function PayeesPage() {
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsEditPayeeOpen(false)}>
+            <Button variant="outline" onClick={() => {setIsEditPayeeOpen(false);}}>
               Cancel
             </Button>
             <Button onClick={() => handleEditPayee(editPayee)}>
@@ -367,6 +376,13 @@ export default function PayeesPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      <PaymentModal
+      isOpen={showPaymentModal}
+              onClose={() => setShowPaymentModal(false)}
+              accounts={accounts}
+              onPayment={handlePayment}
+              payeeAccNo={payeeAccNo}
+      ></PaymentModal>
     </div>
   )
 }

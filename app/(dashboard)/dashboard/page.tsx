@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ArrowDown, ArrowUp, CreditCard, DollarSign, Wallet } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -8,11 +8,22 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Progress } from "@/components/ui/progress"
 import AnalyticsSection from "@/components/sections/AnalyticsSection"
+import { UserData } from "@/components/context/UserContext"
+
+
+
+
+
 
 export default function DashboardPage() {
+  const { userId } = UserData();
+  useEffect(() => {
+    console.log("dashboard id:",userId);
+  }, [userId]);
   const [activeTab, setActiveTab] = useState("overview")
 
   return (
+    
     <div className="flex flex-col gap-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>

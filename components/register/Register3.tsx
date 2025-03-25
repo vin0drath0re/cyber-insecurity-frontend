@@ -22,7 +22,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useUser } from "@/components/register/UserProvider";
+import { useUser } from "@/components/context/UserProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -34,6 +34,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import axios from "axios";
 
 // ✅ Define Validation Schema
 const formSchema = z.object({
@@ -69,15 +70,48 @@ export default function Register3() {
     return () => subscription.unsubscribe();
   }, [form.watch]);
 
-  const onSubmit = async(values: any) => {
-    setIsLoading(true)
+  const onSubmit = async (values: any) => {
+    setIsLoading(true);
     updateUser("street", values.street);
     updateUser("zip", values.zip);
     updateUser("city", values.city);
     updateUser("state", values.state);
 
-    console.log(user)
-    
+    const formattedDob = user.dob ? user.dob.toISOString().split("T")[0] : "";
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/register",
+        {
+          name: user.name,
+          email: user.email,
+          password: user.password,
+          phone: user.phone,
+          customerType: user.customerType,
+          dateOfBirth: formattedDob,
+          pan: user.pan,
+          settingConfig: {},
+          address: {
+            street: user.street,
+            city: user.city,
+            state: user.state,
+            zip: user.zip,
+          },
+        },
+        { withCredentials: true }
+      );
+      console.log("User registered successfully:", response.data);
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.code === "ERR_NETWORK") {
+        console.error(
+          "Network error: Please check your internet connection and try again."
+        );
+      } else {
+        console.error("Error registering user:", error);
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const backHandler = () => {
@@ -110,6 +144,7 @@ export default function Register3() {
       }`}
     >
       <Button onClick={() => console.log(user)}>here</Button>
+
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold text-center text-primary">
           Create an Account
@@ -132,6 +167,7 @@ export default function Register3() {
                     <div className="relative">
                       <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <Input
+                        required
                         className="pl-10"
                         placeholder="Azad Nagar"
                         {...field}
@@ -153,6 +189,7 @@ export default function Register3() {
                     <div className="relative">
                       <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <Input
+                        required
                         className="pl-10"
                         placeholder="400001"
                         {...field}
@@ -179,9 +216,11 @@ export default function Register3() {
                     <div className="relative">
                       <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <Input
+                        required
                         className="pl-10"
                         placeholder="Mumbai"
                         {...field}
+                        defaultValue={undefined}
                         value={user.city}
                         onChange={(e) => updateUser("city", e.target.value)}
                       />
@@ -202,6 +241,7 @@ export default function Register3() {
                     <div className="relative">
                       <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <Input
+                        required
                         className="pl-10"
                         placeholder="Maharashtra"
                         {...field}
@@ -216,10 +256,14 @@ export default function Register3() {
             />
 
             <div className="flex gap-4">
-              <Button onClick={(e) => {
+              <Button
+                onClick={(e) => {
                   e.preventDefault();
                   backHandler();
-                }} className="w-full" disabled={isLoading}>
+                }}
+                className="w-full"
+                disabled={isLoading}
+              >
                 <ChevronLeft />
                 Back
               </Button>

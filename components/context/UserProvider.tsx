@@ -6,7 +6,7 @@ interface User {
   password: string;
   confirmPassword: string;
   phone: string;
-  dob: Date | undefined;
+  dob: Date | null;
   pan: string;
   street: string;
   city: string;
@@ -15,6 +15,7 @@ interface User {
   register1:boolean;
   register2:boolean;
   register3:boolean;
+  customerType:string;
 }
 
 interface UserContextType {
@@ -29,7 +30,7 @@ const UserContext = createContext<UserContextType>({
     password: "",
     confirmPassword: "",
     phone: "",
-    dob: new Date("1999-12-31"),
+    dob: null,
     pan: "",
     street: "",
     city: "",
@@ -38,6 +39,7 @@ const UserContext = createContext<UserContextType>({
     register1:true,
     register2:false,
     register3:false,
+    customerType: "INDIVIDUAL"
   },
   updateUser: () => {},
 });
@@ -49,7 +51,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     password: "",
     confirmPassword: "",
     phone: "",
-    dob: new Date("1999-12-31"),
+    dob: null,
     pan: "",
     street: "",
     city: "",
@@ -58,6 +60,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     register1:true,
     register2:false,
     register3:false,
+    customerType: "INDIVIDUAL",
 
   });
 
