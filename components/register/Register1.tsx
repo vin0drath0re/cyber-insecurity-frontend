@@ -2,11 +2,26 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Eye, EyeOff, Lock, Mail, User, CircleAlert, ChevronRight } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  Lock,
+  Mail,
+  User,
+  CircleAlert,
+  ChevronRight,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { useUser } from "@/components/register/UserProvider";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { useUser } from "@/components/context/UserProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -23,10 +38,16 @@ import { register } from "module";
 // ✅ Define Validation Schema
 const formSchema = z
   .object({
-    name: z.string().min(2, { message: "Full Name must be at least 2 characters." }),
+    name: z
+      .string()
+      .min(2, { message: "Full Name must be at least 2 characters." }),
     email: z.string().email({ message: "Invalid email address." }),
-    password: z.string().min(6, { message: "Password must be at least 6 characters." }),
-    confirmPassword: z.string().min(6, { message: "Confirm Password must be at least 6 characters." }),
+    password: z
+      .string()
+      .min(6, { message: "Password must be at least 6 characters." }),
+    confirmPassword: z
+      .string()
+      .min(6, { message: "Confirm Password must be at least 6 characters." }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -50,11 +71,8 @@ export default function Register1() {
     },
   });
 
-  
-
   // ✅ Handle Form Submission
   function onSubmit(values: any) {
-    
     updateUser("name", values.name);
     updateUser("email", values.email);
     updateUser("password", values.password);
@@ -62,12 +80,21 @@ export default function Register1() {
     updateUser("register1", false);
     updateUser("register2", true);
     updateUser("register3", false);
-    
   }
 
   return (
-    <Card className={`shadow-lg border-border border bg-card ${user.register1 ? "":"hidden"}`} >
-        <Button onClick={()=>{console.log(user)}}>here</Button>
+    <Card
+      className={`shadow-lg border-border border bg-card ${
+        user.register1 ? "" : "hidden"
+      }`}
+    >
+      <Button
+        onClick={() => {
+          console.log(user);
+        }}
+      >
+        here
+      </Button>
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold text-center text-primary">
           Create an Account
@@ -79,7 +106,6 @@ export default function Register1() {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            
             {/* Full Name */}
             <FormField
               control={form.control}
@@ -90,7 +116,12 @@ export default function Register1() {
                   <FormControl>
                     <div className="relative">
                       <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                      <Input className="pl-10" placeholder="John Doe" {...field} />
+                      <Input
+                        required
+                        className="pl-10"
+                        placeholder="John Doe"
+                        {...field}
+                      />
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -108,7 +139,13 @@ export default function Register1() {
                   <FormControl>
                     <div className="relative">
                       <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                      <Input className="pl-10" placeholder="name@example.com" type="email" {...field} />
+                      <Input
+                        required
+                        className="pl-10"
+                        placeholder="name@example.com"
+                        type="email"
+                        {...field}
+                      />
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -126,7 +163,13 @@ export default function Register1() {
                   <FormControl>
                     <div className="relative">
                       <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                      <Input autoComplete="password" type={showPassword ? "text" : "password"} className="pl-10" {...field} />
+                      <Input
+                        required
+                        autoComplete="password"
+                        type={showPassword ? "text" : "password"}
+                        className="pl-10"
+                        {...field}
+                      />
                       <Button
                         type="button"
                         variant="ghost"
@@ -134,7 +177,11 @@ export default function Register1() {
                         className="absolute right-0 top-0 h-full px-3 py-2 text-muted-foreground"
                         onClick={() => setShowPassword(!showPassword)}
                       >
-                        {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4" />
+                        ) : (
+                          <Eye className="h-4 w-4" />
+                        )}
                       </Button>
                     </div>
                   </FormControl>
@@ -153,15 +200,26 @@ export default function Register1() {
                   <FormControl>
                     <div className="relative">
                       <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                      <Input autoComplete="password" type={showConfirmPassword ? "text" : "password"} className="pl-10" {...field} />
+                      <Input
+                        autoComplete="password"
+                        type={showConfirmPassword ? "text" : "password"}
+                        className="pl-10"
+                        {...field}
+                      />
                       <Button
                         type="button"
                         variant="ghost"
                         size="icon"
                         className="absolute right-0 top-0 h-full px-3 py-2 text-muted-foreground"
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
                       >
-                        {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                        {showConfirmPassword ? (
+                          <EyeOff className="h-4 w-4" />
+                        ) : (
+                          <Eye className="h-4 w-4" />
+                        )}
                       </Button>
                     </div>
                   </FormControl>
@@ -172,7 +230,7 @@ export default function Register1() {
 
             <Button type="submit" className="w-full" disabled={isLoading}>
               Proceed
-              <ChevronRight/>
+              <ChevronRight />
             </Button>
           </form>
         </Form>

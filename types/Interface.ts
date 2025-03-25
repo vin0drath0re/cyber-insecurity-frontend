@@ -4,7 +4,7 @@ export interface Customer {
     email: string;
     phone: string;
     password: string;
-    address: object[];
+    address: object;
     customerType: CustomerType;
     dateOfBirth: Date;
     pan: string;

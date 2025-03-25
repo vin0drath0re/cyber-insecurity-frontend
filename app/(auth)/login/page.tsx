@@ -1,10 +1,11 @@
 "use client";
 
 import type React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import axios from "axios";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,24 +19,21 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+import { UserData } from "@/components/context/UserContext";
+
+
 export const login = async (email: string, password: string) => {
   try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ email, password }),
-      });
+    const response = await axios.post(
+      "http://localhost:5000/api/auth/login",
+      { email, password },
+      { withCredentials: true }
+    );
 
-      if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message);
-      }
-
-      return await response.json();
+    return response.data;
   } catch (error) {
-      console.error(error);
-      return null;
+    console.error(error);
+    return null;
   }
 };
 
@@ -43,6 +41,11 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { userId, setUserId } = UserData();
+
+
+
+ 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,43 +54,37 @@ export default function LoginPage() {
     const email = (e.target as any).email.value;
     const password = (e.target as any).password.value;
 
-    
+    let result = null; // Initialize result to null
+    try {
+      result = await login(email, password);
+      setUserId(result)
 
-    const result = await login(email, password);
-
-    console.log(result)
-
-    setIsLoading(false);
+      
+    } catch (error) {
+      console.error("Error: ", error);
+    }
 
     if (result) {
+      alert("Login success")
       router.push("/dashboard");
     } else {
       alert("Login failed. Please check your credentials and try again.");
     }
+    setIsLoading(false);
   };
 
-  const checkHandler = async () => {
-    try {
-      console.log("Starting fetch request...");
-      const response = await fetch("http://localhost:5000/", {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include' // Ensure credentials are included
-      });
-      console.log("Fetch request completed.");
+  
+  const checkHandler = () => {
+   console.log("world")
+    
+    // console.log(user)
+  };
 
-      if (!response.ok) {
-        console.error("Network response was not ok", response.statusText);
-        throw new Error("Network response was not ok");
-      }
-
-      const data = await response.json();
-      console.log("Response data:", data);
-    } catch (error) {
-      console.error("Fetch error:", error);
+  useEffect(() => {
+    if (userId) {
+      console.log("Updated id:", userId);
     }
-  };
+  }, [userId]);
 
   return (
     <Card className="shadow-lg border-border border bg-card">

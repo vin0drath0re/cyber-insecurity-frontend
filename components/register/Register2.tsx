@@ -22,7 +22,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useUser } from "@/components/register/UserProvider";
+import { useUser } from "@/components/context/UserProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
@@ -34,6 +34,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -52,6 +62,7 @@ const formSchema = z.object({
       message: "Enter valid DOB",
     }),
   pan: z.string().regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/),
+  customerType: z.string(),
 });
 
 export default function Register2() {
@@ -65,14 +76,25 @@ export default function Register2() {
       phone: user.phone || "",
       dob: user.dob ? new Date(user.dob) : new Date(), // Ensure dob is always a Date object
       pan: user.pan || "",
+      customerType: user.customerType,
     },
   });
+
+  useEffect(() => {
+    const subscription = form.watch((value, { name }) => {
+      if (name === "customerType") {
+        updateUser("customerType", value.customerType);
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [form.watch, updateUser]);
 
   // ✅ Handle Form Submission
   const onSubmit = (values: any) => {
     updateUser("phone", values.phone);
     updateUser("pan", values.pan);
     updateUser("dob", values.dob);
+    updateUser("customerType", values.customerType);
     updateUser("register1", false);
     updateUser("register2", false);
     updateUser("register3", true);
@@ -119,12 +141,42 @@ export default function Register2() {
                     <div className="relative">
                       <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <Input
+                      required
                         type="tel"
                         className="pl-10"
                         placeholder="9876543210"
                         {...field}
                       />
                     </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="customerType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Account Type</FormLabel>
+                  <FormControl>
+                    <Select required onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Select Account Type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="INDIVIDUAL">Individual</SelectItem>
+                          <SelectItem value="SHOPPING">Shopping</SelectItem>
+                          <SelectItem value="ENTERTAINMENT">
+                            Entertainment
+                          </SelectItem>
+                          <SelectItem value="HOUSING">Housing</SelectItem>
+                          <SelectItem value="FOOD">Food</SelectItem>
+                          <SelectItem value="OTHERS">Others</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -137,11 +189,15 @@ export default function Register2() {
               name="dob"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Date of Birth</FormLabel>
+                  <FormLabel>
+                    {user.customerType === "INDIVIDUAL" ? "" : "Owner's "}Date
+                    of Birth
+                  </FormLabel>
                   <FormControl>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DemoContainer components={["DatePicker"]}>
                         <DatePicker
+                        
                           {...field}
                           value={field.value ? dayjs(field.value) : null}
                           onChange={(date) =>
@@ -165,11 +221,14 @@ export default function Register2() {
               name="pan"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>PAN no</FormLabel>
+                  <FormLabel>
+                    {user.customerType === "INDIVIDUAL" ? "" : "Owner's "}PAN no
+                  </FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <Input
+                      required
                         className="pl-10"
                         placeholder="ABCDE1234K"
                         {...field}

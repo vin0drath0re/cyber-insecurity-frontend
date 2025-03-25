@@ -1,5 +1,11 @@
 "use client";
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
 import axios from "axios";
 import dotenv from "dotenv";
 
@@ -34,7 +40,7 @@ interface DeletePayeeResponse {
 }
 
 interface CheckPayeeResponse {
-  name : string;
+  name: string;
 }
 
 interface UserContextType {
@@ -58,7 +64,11 @@ interface UserContextType {
   CheckPayeeName: (payeeifsc: string, payeeAccNo: string) => Promise<void>;
   addPayee: AddPayeeResponse[];
   payees: Payee[];
-  PayeeName:string;
+  PayeeName: string;
+  setUserId: (userId: string) => void;
+  userId: string;
+  SetUserByManual: (userId: string) => Promise<void>;
+  Auth: () => Promise<"" | undefined>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -72,6 +82,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
   const [payees, setPayees] = useState<Payee[]>([]);
   const [addPayee, setAddPayee] = useState<AddPayeeResponse[]>([]);
   const [PayeeName, setPayeeName] = useState("");
+  const [userId, setUserId] = useState("");
 
   const fetchPayees = async (payerCustomerId: string) => {
     setBtnLoading(true);
@@ -159,35 +170,40 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     }
   };
 
-  const CheckPayeeName = async (payeeAccNo: string , payeeifsc: string, ) => {
+  const CheckPayeeName = async (payeeAccNo: string, payeeifsc: string) => {
     setBtnLoading(true);
-    
+
     try {
       //console.log(payeeifsc, payeeAccNo);
-      
-      const response = await axios.post('http://localhost:5000/api/payees/name', {
-        data: {
-          payeeifsc,
-          payeeAccNo
+
+      const response = await axios.post(
+        "http://localhost:5000/api/payees/name",
+        {
+          data: {
+            payeeifsc,
+            payeeAccNo,
+          },
         }
-      });
-      
+      );
+
       if (!response.data?.customerName) {
-        throw new Error('Customer name not found in response');
+        throw new Error("Customer name not found in response");
       }
-      
+
       setPayeeName(response.data.customerName);
       //console.log(response.data);
-      
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response) {
           console.error("Server responded with error:", error.response.data);
           // Handle specific status codes
           if (error.response.status === 404) {
-            console.error('Resource not found');
-          } else if (error.response.status === 401 || error.response.status === 403) {
-            console.error('Authentication/Authorization failed');
+            console.error("Resource not found");
+          } else if (
+            error.response.status === 401 ||
+            error.response.status === 403
+          ) {
+            console.error("Authentication/Authorization failed");
           }
         } else if (error.request) {
           console.error("No response received from server");
@@ -201,9 +217,36 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
       setBtnLoading(false);
     }
   };
+
+  const SetUserByManual = async (userId: string) => {
+    setUserId(userId);
+  };
+
+  const Auth = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/auth/cookieReturn",
+        {
+          withCredentials: true, // Sends cookies with the request
+        }
+      );
+
+      setUserId(response.data);
+    } catch (error) {
+      return "";
+    }
+  };
+
+
+
+  useEffect(() => {
+    Auth();
+  }, []);
+
   return (
     <UserContext.Provider
       value={{
+        Auth,
         BtnLoading,
         fetchPayees,
         AddPayeeById,
@@ -213,6 +256,9 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         addPayee,
         payees,
         PayeeName,
+        userId,
+        SetUserByManual,
+        setUserId,
       }}
     >
       {children}

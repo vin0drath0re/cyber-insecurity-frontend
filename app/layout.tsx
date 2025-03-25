@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { UserContextProvider } from "@/components/context/UserContext";
+import { UserContextProvider, UserData } from "@/components/context/UserContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   title: "SafeXBank - Modern Banking",
   description: "Manage your finances with ease",
 };
+
+
 
 export default function RootLayout({
   children,

@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Bell, CreditCard, Edit, Key, Lock, Mail, Phone, Save, Shield, User, Plus } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -14,8 +14,16 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Switch } from "@/components/ui/switch"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
+import { UserData } from "@/components/context/UserContext"
 
 export default function ProfilePage() {
+
+   const { userId } = UserData();
+    useEffect(() => {
+      console.log("profile id:",userId);
+    }, [userId]);
+
+
   const [isEditing, setIsEditing] = useState(false)
   const [profileData, setProfileData] = useState({
     firstName: "John",
@@ -44,6 +52,7 @@ export default function ProfilePage() {
 
   return (
     <div className="flex flex-col gap-6">
+
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Profile</h1>
