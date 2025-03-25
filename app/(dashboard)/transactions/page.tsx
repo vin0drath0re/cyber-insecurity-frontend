@@ -48,7 +48,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 
 export default function HistoryPage() {
-  const accountNo = "1837906204450";
+  const accountNo = "1521956909818";
   // All transactions fetched from API
   const [allTransactions, setAllTransactions] = useState<Transaction[]>([]);
   // Loading state
@@ -344,7 +344,7 @@ export default function HistoryPage() {
                     <div className='flex flex-col sm:flex-row sm:items-center gap-4 mb-2 sm:mb-0'>
                       <div className='flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center'>
                         {toself ? (
-                          <ArrowLeftRight className='h-6 w-6 text-emerald-600' />
+                          <ArrowLeftRight className='h-6 w-6 text-blue-500' />
                         ) : isSender ? (
                           <ArrowDown className='h-6 w-6 text-rose-600' />
                         ) : (
