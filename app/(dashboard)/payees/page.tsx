@@ -253,7 +253,7 @@ export default function PayeesPage() {
                       </Avatar>
                       <div>
                         <CardTitle className="text-base">{payee.name}</CardTitle>
-                        <CardDescription className="text-xs">{payee.payeeAccNo}</CardDescription>
+                        <CardDescription className="text-xs"> {"**** **** " + payee.payeeAccNo.slice(-4)}</CardDescription>
                       </div>
                     </div>
                     <DropdownMenu>
@@ -282,7 +282,7 @@ export default function PayeesPage() {
                     <div className="grid grid-cols-2 gap-2 text-sm">
                       <div>
                         <p className="text-muted-foreground">Type</p>
-                        <p className="font-medium">{payee.payeeType}</p>
+                        <p className="font-medium ">{payee.payeeType.charAt(0).toUpperCase() + payee.payeeType.slice(1).toLowerCase()}</p>
                       </div>
                       <div>
                         <p className="text-muted-foreground">Last Payment</p>

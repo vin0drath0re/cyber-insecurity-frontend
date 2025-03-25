@@ -32,14 +32,16 @@ export default function HomePage() {
           SafeXBank
         </div> */}
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center bg-gradient-to-b from-white to-violet-50 animate-bounce-once" style={{ animationDelay: "300ms" }}>
+      <section
+        className="relative min-h-screen flex items-center bg-gradient-to-b from-white to-violet-50 animate-bounce-once"
+        style={{ animationDelay: "300ms" }}
+      >
         {/* <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-gradient-to-b from-white to-violet-50"></div>
         </div> */}
-         
+
         <div className="container-padding py-20">
           <div className="max-w-3xl mx-auto text-center">
-         
             <h1 className="heading-lg mb-6 animate-slide-up text-zinc-950">
               <span className="text-violet-600">Modern Banking</span> For a
               Modern World
@@ -56,26 +58,41 @@ export default function HomePage() {
               className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up"
               style={{ animationDelay: "300ms" }}
             >
-              <Button
-                size="lg"
-                className="bg-violet-600 hover:bg-violet-700 text-white rounded-full"
-              >
-                <Link href="/register">Get Started Now</Link>
-                <ArrowRight className="ml-1 h-5 w-5" />
-              </Button>
-              <Button size="lg" variant="outline" className="rounded-full">
-              <Link href="/login">Sign In</Link>
-              </Button>
+              <Link href="/register">
+                <Button
+                  size="lg"
+                  className="bg-violet-600 hover:bg-violet-700 text-white rounded-full"
+                >
+                  <span>Get Started Now</span>
+                  <ArrowRight className="ml-1 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link href="/login">
+                <Button size="lg" variant="outline" className="rounded-full ">
+                  <span>Sign In</span>
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
         <div className="absolute bottom-0 left-0 right-0 mb-4 items-center justify-center flex flex-col">
-        <div className="opacity-0 animate-fade-in" style={{animationDelay:"650ms"}}>
-          <span className="text-violet-300 animate-fade-out" style={{animationDelay:"2000ms"}}>Learn More</span>
-          
-          <ArrowUp className="h-20 w-20 text-violet-300 animate-fade-out" style={{animationDelay:"2000ms"}} />
+          <div
+            className="opacity-0 animate-fade-in"
+            style={{ animationDelay: "650ms" }}
+          >
+            <span
+              className="text-violet-300 animate-fade-out"
+              style={{ animationDelay: "2000ms" }}
+            >
+              Learn More
+            </span>
+
+            <ArrowUp
+              className="h-20 w-20 text-violet-300 animate-fade-out"
+              style={{ animationDelay: "2000ms" }}
+            />
           </div>
-          </div>
+        </div>
       </section>
 
       {/* Features Section */}
@@ -196,8 +213,11 @@ export default function HomePage() {
               </p>
               <Button
                 size="lg"
-                className="bg-white text-violet-800 hover:bg-violet-50 rounded-full">
-                <Link className="flex justify-center" href="/register">Get Started Now <ArrowRight className="ml-2 h-5 w-5" /></Link>
+                className="bg-white text-violet-800 hover:bg-violet-50 rounded-full"
+              >
+                <Link className="flex justify-center" href="/register">
+                  Get Started Now <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
               </Button>
             </div>
             <div className="flex justify-center md:justify-end">

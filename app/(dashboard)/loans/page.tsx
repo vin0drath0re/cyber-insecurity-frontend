@@ -121,9 +121,6 @@ const Loans = () => {
                   Apply Now
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Button>
-                <Button size="lg" variant="outline" className="rounded-lg">
-                  Calculate Payments
-                </Button>
               </div>
             </div>
             <div className="relative rounded-xl border bg-card text-card-foreground shadow p-6 md:p-10">
