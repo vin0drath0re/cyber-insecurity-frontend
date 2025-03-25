@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { CalendarIcon, ChevronLeft, ChevronRight, Download, Filter, Search } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -20,6 +20,8 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Calendar } from "@/components/ui/calendar"
 import { format } from "date-fns"
+import { UserData } from "@/components/context/UserContext"
+import { useRouter } from "next/navigation"
 
 // Sample transaction history data
 const transactionHistory = Array.from({ length: 50 }, (_, i) => {
@@ -80,6 +82,20 @@ export default function HistoryPage() {
   const [date, setDate] = useState<Date | undefined>(undefined)
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 10
+   const {isAuth} = UserData()
+     const router = useRouter()
+      const [loading, setLoading] = useState(true);
+      useEffect(() => {
+        if (!isAuth) {
+          router.push("/login"); // Redirect if not authenticated
+        } else {
+          setLoading(false);
+        }
+      }, [isAuth, router]);
+    
+      if (loading) {
+        return <p className="text-center text-lg">Loading...</p>; // Show a loading state
+      }
 
   // Filter transactions
   const filteredTransactions = transactionHistory.filter((transaction) => {

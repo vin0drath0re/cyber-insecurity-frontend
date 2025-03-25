@@ -112,13 +112,6 @@ export default function Register2() {
         user.register2 ? "" : "hidden"
       }`}
     >
-      <Button
-        onClick={() => {
-          console.log(user);
-        }}
-      >
-        here
-      </Button>
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold text-center text-primary">
           Enter Details

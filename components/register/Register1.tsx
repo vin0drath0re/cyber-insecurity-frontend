@@ -60,7 +60,7 @@ export default function Register1() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // ✅ Initialize React Hook Form with Context API values
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -71,7 +71,7 @@ export default function Register1() {
     },
   });
 
-  // ✅ Handle Form Submission
+
   function onSubmit(values: any) {
     updateUser("name", values.name);
     updateUser("email", values.email);
@@ -88,13 +88,6 @@ export default function Register1() {
         user.register1 ? "" : "hidden"
       }`}
     >
-      <Button
-        onClick={() => {
-          console.log(user);
-        }}
-      >
-        here
-      </Button>
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold text-center text-primary">
           Create an Account

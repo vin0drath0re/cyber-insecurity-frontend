@@ -15,7 +15,9 @@ import GlassCard from "@/components/ui/cards/GlassCard";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { UserData } from "@/components/context/UserContext";
+import { useRouter } from "next/navigation";
 
 const Loans = () => {
   const { ref, isInView } = useScrollAnimation();
@@ -97,6 +99,20 @@ const Loans = () => {
   const [amount, setAmount] = useState(25000);
   const [interest, setInterest] = useState(2.5);
   const [term, setTerm] = useState(5);
+   const {isAuth} = UserData()
+     const router = useRouter()
+      const [loading, setLoading] = useState(true);
+      useEffect(() => {
+        if (!isAuth) {
+          router.push("/login"); // Redirect if not authenticated
+        } else {
+          setLoading(false);
+        }
+      }, [isAuth, router]);
+    
+      if (loading) {
+        return <p className="text-center text-lg">Loading...</p>; // Show a loading state
+      }
 
   return (
     <div className="flex flex-col min-h-screen">

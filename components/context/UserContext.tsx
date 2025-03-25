@@ -69,6 +69,7 @@ interface UserContextType {
   userId: string;
   SetUserByManual: (userId: string) => Promise<void>;
   Auth: () => Promise<"" | undefined>;
+  isAuth: boolean;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -83,6 +84,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
   const [addPayee, setAddPayee] = useState<AddPayeeResponse[]>([]);
   const [PayeeName, setPayeeName] = useState("");
   const [userId, setUserId] = useState("");
+  const [isAuth, setIsAuth] = useState(false);
 
   const fetchPayees = async (payerCustomerId: string) => {
     setBtnLoading(true);
@@ -232,6 +234,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
       );
 
       setUserId(response.data);
+      setIsAuth(true);
     } catch (error) {
       return "";
     }
@@ -259,6 +262,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         userId,
         SetUserByManual,
         setUserId,
+        isAuth,
       }}
     >
       {children}

@@ -59,7 +59,7 @@ export function Navbar() {
     { name: "Accounts", href: "/accounts" },
     { name: "Transactions", href: "/transactions" },
     { name: "Payees", href: "/payees" },
-    { name: "Investments", href: "/investments" },
+    // { name: "Investments", href: "/investments" },
     { name: "Loans", href: "/loans" },
     { name: "Profile", href: "/profile" },
   ]

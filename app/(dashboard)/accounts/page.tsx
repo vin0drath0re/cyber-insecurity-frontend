@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CreditCard, PlusCircle, ArrowRightLeft } from 'lucide-react';
 import { accounts } from '@/data/mockData';
 import { Button } from '@/components/ui/button';
@@ -13,9 +13,25 @@ import {
 } from '@/components/ui/tabs';
 import TransferModal from '@/components/modals/TransferModal';
 import { toast } from "sonner";
+import { useRouter } from 'next/navigation';
+import { UserData } from '@/components/context/UserContext';
 
 const Accounts = () => {
   const [showTransferModal, setShowTransferModal] = useState(false);
+  const {isAuth} = UserData()
+   const router = useRouter()
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+      if (!isAuth) {
+        router.push("/login"); // Redirect if not authenticated
+      } else {
+        setLoading(false);
+      }
+    }, [isAuth, router]);
+  
+    if (loading) {
+      return <p className="text-center text-lg">Loading...</p>; // Show a loading state
+    }
   
   const handleTransfer = (fromId: string, toId: string, amount: number) => {
     const updatedAccounts = accounts.map(account => {
