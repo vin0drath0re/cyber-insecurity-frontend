@@ -28,10 +28,13 @@ import { useEffect } from "react";
 
 export default function HomePage() {
   const { setTheme } = useTheme();
-
+  
   useEffect(() => {
     setTheme("light"); // Force light theme when visiting this page
   }, [setTheme]);
+
+
+ 
 
   return (
     <div className="flex flex-col min-h-screen bg-white antialiased">

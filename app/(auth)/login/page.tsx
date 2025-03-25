@@ -74,12 +74,6 @@ export default function LoginPage() {
   };
 
   
-  const checkHandler = () => {
-   console.log("world")
-    
-    // console.log(user)
-  };
-
   useEffect(() => {
     if (userId) {
       console.log("Updated id:", userId);
@@ -88,7 +82,6 @@ export default function LoginPage() {
 
   return (
     <Card className="shadow-lg border-border border bg-card">
-      <Button onClick={checkHandler}>Hello</Button>
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold text-center text-primary">
           Welcome to SafeXBank

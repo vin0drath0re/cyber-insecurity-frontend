@@ -15,10 +15,27 @@ import { Switch } from "@/components/ui/switch"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import { UserData } from "@/components/context/UserContext"
+import { useRouter } from "next/navigation"
 
 export default function ProfilePage() {
 
-   const { userId } = UserData();
+   const { userId ,isAuth } = UserData();
+
+  
+   const router = useRouter()
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+      if (!isAuth) {
+        router.push("/login"); // Redirect if not authenticated
+      } else {
+        setLoading(false);
+      }
+    }, [isAuth, router]);
+  
+    if (loading) {
+      return <p className="text-center text-lg">Loading...</p>; // Show a loading state
+    }
+
     useEffect(() => {
       console.log("profile id:",userId);
     }, [userId]);

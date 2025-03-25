@@ -22,6 +22,7 @@ import { UserData } from "@/components/context/UserContext"
 import { accounts } from '@/data/mockData';
 
 import PaymentModal from "@/components/modals/PaymentModal"
+import { useRouter } from "next/navigation"
 
 export default function PayeesPage() {
   // State management
@@ -40,11 +41,8 @@ export default function PayeesPage() {
     ifsc: "",
     payeeType: "OTHERS"
   })
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [payeeAccNo, setPayeeAccNo] = useState("")
-
-  // Context functions
-  const {
+   // Context functions
+   const {
     fetchPayees,
     AddPayeeById,
     EditPayee,
@@ -52,8 +50,27 @@ export default function PayeesPage() {
     CheckPayeeName,
     PayeeName,
     payees,
-    addPayee
+    addPayee,
+    isAuth
   } = UserData()
+
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [payeeAccNo, setPayeeAccNo] = useState("")
+
+ 
+     const router = useRouter()
+      const [loading, setLoading] = useState(true);
+      useEffect(() => {
+        if (!isAuth) {
+          router.push("/login"); // Redirect if not authenticated
+        } else {
+          setLoading(false);
+        }
+      }, [isAuth, router]);
+    
+      if (loading) {
+        return <p className="text-center text-lg">Loading...</p>; // Show a loading state
+      }
 
   const payerCustomerId = "e48d6144-972e-4572-b6fa-747a22d814d3"
 

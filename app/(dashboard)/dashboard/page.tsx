@@ -6,17 +6,27 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Progress } from "@/components/ui/progress"
 import AnalyticsSection from "@/components/sections/AnalyticsSection"
 import { UserData } from "@/components/context/UserContext"
-
-
-
-
+import { useRouter } from "next/navigation"
 
 
 export default function DashboardPage() {
-  const { userId } = UserData();
+  const { userId , isAuth } = UserData();
+  const router = useRouter()
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    if (!isAuth) {
+      router.push("/login"); // Redirect if not authenticated
+    } else {
+      setLoading(false);
+    }
+  }, [isAuth, router]);
+
+  if (loading) {
+    return <p className="text-center text-lg">Loading...</p>; // Show a loading state
+  }
+
   useEffect(() => {
     console.log("dashboard id:",userId);
   }, [userId]);

@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { UserContextProvider, UserData } from "@/components/context/UserContext";
+import ProtectedRoute from "@/components/protected";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +20,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
@@ -29,7 +31,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <ProtectedRoute>
             {children}
+            </ProtectedRoute>
           </ThemeProvider>
         </UserContextProvider>
       </body>

@@ -6,7 +6,6 @@ import Register2 from "@/components/register/Register2";
 import Register3 from "@/components/register/Register3";
 import { UserProvider } from "@/components/context/UserProvider";
 import { useUser } from "@/components/context/UserProvider";
-import { Button } from "@/components/ui/button";
 import axios from "axios";
 
 export default function RegisterPage() {
@@ -19,7 +18,6 @@ export default function RegisterPage() {
 
   return (
     <UserProvider>
-      <Button onClick={() => {checkHandler()}}>check server</Button>
       <Register1 />
       <Register2 />
       <Register3 />

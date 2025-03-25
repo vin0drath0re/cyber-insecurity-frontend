@@ -46,6 +46,8 @@ import {
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
+import { UserData } from "@/components/context/UserContext";
+import { useRouter } from "next/navigation";
 
 export default function HistoryPage() {
   const accountNo = "1521956909818";
@@ -66,6 +68,21 @@ export default function HistoryPage() {
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+
+  const {isAuth} = UserData()
+  const router = useRouter()
+   const [loading, setLoading] = useState(true);
+   useEffect(() => {
+     if (!isAuth) {
+       router.push("/login"); // Redirect if not authenticated
+     } else {
+       setLoading(false);
+     }
+   }, [isAuth, router]);
+ 
+   if (loading) {
+     return <p className="text-center text-lg">Loading...</p>; // Show a loading state
+   }
 
   // Status mapping
   const mapping: Record<string, string> = {
@@ -190,6 +207,33 @@ export default function HistoryPage() {
     ),
   ];
 
+  // const { downloadPDF} = UserData()
+
+  const downloadPDF = async (accNo: string) => {
+    try {
+      if (!accNo) {
+        alert("Please enter an account number");
+        return;
+      }
+  
+      const response = await fetch(`http://localhost:5000/api/export-pdf/${accNo}`);
+  
+      if (!response.ok) throw new Error("Failed to download PDF");
+  
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `transactions_${accNo}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error("Error downloading PDF:", error);
+      alert("Failed to download PDF");
+    }
+  };
+
   // Function to determine if account is sender or receiver
   const isAccountSender = (transaction: Transaction) => {
     return transaction.senderAccNo === accountNo;
@@ -229,7 +273,7 @@ export default function HistoryPage() {
               />
             </PopoverContent>
           </Popover>
-          <Button variant='outline'>
+          <Button onClick={()=>downloadPDF(accountNo)} variant='outline'>
             <Download className='mr-2 h-4 w-4' />
             Export
           </Button>
