@@ -82,42 +82,6 @@ const AnalyticsSection: React.FC = () => {
           </ResponsiveContainer>
         </div>
       </div>
-
-      {/* Recent Transactions Table */}
-      <div className="rounded-xl bg-white shadow-sm dark:bg-card border border-border overflow-hidden">
-        <h2 className="text-lg font-semibold p-4 mb-0">Recent Transactions</h2>
-        <div className="relative">
-          <div className="">
-            <table className="w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <thead>
-                <tr className=" dark:bg-card">
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                {[
-                  { date: 'Jul 1', description: 'Grocery Store', category: 'Food', amount: '-$150.00' },
-                  { date: 'Jul 3', description: 'Online Shopping', category: 'Shopping', amount: '-$200.00' },
-                  { date: 'Jul 5', description: 'Salary', category: 'Income', amount: '+$5,000.00' },
-                  { date: 'Jul 7', description: 'Electric Bill', category: 'Utilities', amount: '-$120.00' },
-                ].map((txn, index) => (
-                  <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                    <td className="px-4 py-3 text-sm">{txn.date}</td>
-                    <td className="px-4 py-3">{txn.description}</td>
-                    <td className="px-4 py-3 text-sm">{txn.category}</td>
-                    <td className={`px-4 py-3 text-right font-medium ${txn.amount.startsWith('-') ? 'text-red-500' : 'text-green-600'}`}>
-                      {txn.amount}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

@@ -46,11 +46,11 @@
   }
 
   .dark {
-    --background: 263 65% 6%; /* violet-900 */
+    --background: 263 65% 14%; /* violet-900 */
     --foreground: 0 0% 98%; /* white */
-    --card: 263 65% 8%; /* violet-800 */
+    --card: 263 65% 15%; /* violet-800 */
     --card-foreground: 0 0% 98%; /* white */
-    --popover: 240 5% 10%; /* gray-900 */
+    --popover: 263 65% 13%; /* violet-900 */
     --popover-foreground: 0 0% 98%; /* white */
     --primary: 263 75% 55%; /* violet-700 */
     --primary-foreground: 0 0% 100%; /* white */
