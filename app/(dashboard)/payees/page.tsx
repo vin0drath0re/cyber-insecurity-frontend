@@ -1,5 +1,6 @@
 "use client"
 
+import axios from "axios";
 import { useEffect, useState } from "react"
 import { Building, Check, Edit, MoreHorizontal, Plus, Search, Trash, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -137,7 +138,33 @@ export default function PayeesPage() {
     }
   }
 
-  const handlePayment = ()=>{}
+  const handlePayment = async (fromId: string, toId: string, amount: number) => {
+
+
+    interface TransactionResponse {
+      success: boolean;
+      message: string;
+      data?: any; // Replace `any` with the actual structure of the response data if known
+    }
+
+    const response = await axios.post<TransactionResponse>(
+      "http://localhost:5000/transactions",
+      {
+        data: {
+          senderAccNo: fromId,
+          receiverAccNo: toId,
+          amount,
+          status: false,
+          category: "OTHERS",
+          transactionType: "PAYMENT"
+        },
+      }
+    );
+
+    console.log(response.data);
+
+
+  }
 
   
 
@@ -151,6 +178,8 @@ export default function PayeesPage() {
     })
     setIsEditPayeeOpen(true)
   }
+
+  
 
   return (
     <div className="flex flex-col gap-6">

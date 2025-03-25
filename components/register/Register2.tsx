@@ -11,7 +11,6 @@ import {
   CircleAlert,
   ChevronRight,
   ChevronLeft,
-  CalendarIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,17 +35,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-
-// Import ShadCN date picker components
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
-
 import {
   Select,
   SelectContent,
@@ -65,7 +53,6 @@ import dayjs from "dayjs";
 
 const currentDate = dayjs();
 
-
 // ✅ Define Validation Schema
 const formSchema = z.object({
   phone: z.string().regex(/^[0-9]{10}$/, { message: "Enter valid Phone No" }), // Phone number validation
@@ -74,11 +61,8 @@ const formSchema = z.object({
     .refine((date) => date instanceof Date && !isNaN(date.getTime()), {
       message: "Enter valid DOB",
     }),
-
-  pan: z.string().regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, {
-    message: "Enter valid PAN (e.g., ABCDE1234K)",
-  }),
-
+  pan: z.string().regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/),
+  customerType: z.string(),
 });
 
 export default function Register2() {
@@ -90,7 +74,7 @@ export default function Register2() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       phone: user.phone || "",
-      dob: user.dob ? new Date(user.dob) : undefined, // Use undefined as default instead of current date
+      dob: user.dob ? new Date(user.dob) : new Date(), // Ensure dob is always a Date object
       pan: user.pan || "",
       customerType: user.customerType,
     },
@@ -145,7 +129,7 @@ export default function Register2() {
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
+                  <FormLabel>Phone no</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -192,51 +176,33 @@ export default function Register2() {
               )}
             />
 
-            {/* Date of Birth with ShadCN DatePicker */}
-            <FormField
+            {/* Date of Birth */}
+            <Controller
               control={form.control}
               name="dob"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-
-                  <FormLabel>{user.customerType === "INDIVIDUAL" ? "" : "Owner's "}Date of Birth</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-full pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground"
-                          )}
-                          type="button" // Important: Prevent form submission
-                          onClick={(e) => e.stopPropagation()} // Prevent event bubbling
-                        >
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {field.value ? (
-                            format(field.value, "PPP")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={(date) => {
-                          field.onChange(date);
-                          // Optional: Close popover on date selection
-                        }}
-                        disabled={(date) =>
-                          date > new Date() || date < new Date("1900-01-01")
-                        }
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-
+                  <FormLabel>
+                    {user.customerType === "INDIVIDUAL" ? "" : "Owner's "}Date
+                    of Birth
+                  </FormLabel>
+                  <FormControl>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DemoContainer components={["DatePicker"]}>
+                        <DatePicker
+                        
+                          {...field}
+                          value={field.value ? dayjs(field.value) : null}
+                          onChange={(date) =>
+                            field.onChange(date ? date.toDate() : null)
+                          }
+                          yearsOrder="desc"
+                          sx={{ width: "100%" }}
+                          maxDate={currentDate}
+                        />
+                      </DemoContainer>
+                    </LocalizationProvider>
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -248,22 +214,17 @@ export default function Register2() {
               name="pan"
               render={({ field }) => (
                 <FormItem>
-
                   <FormLabel>
                     {user.customerType === "INDIVIDUAL" ? "" : "Owner's "}PAN no
                   </FormLabel>
-
                   <FormControl>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <Input
                       required
                         className="pl-10"
                         placeholder="ABCDE1234K"
                         {...field}
-                        onChange={(e) =>
-                          field.onChange(e.target.value.toUpperCase())
-                        }
                       />
                     </div>
                   </FormControl>
@@ -280,14 +241,13 @@ export default function Register2() {
                 }}
                 className="w-full"
                 disabled={isLoading}
-                variant="outline"
               >
-                <ChevronLeft className="mr-2 h-4 w-4" />
+                <ChevronLeft />
                 Back
               </Button>
               <Button type="submit" className="w-full" disabled={isLoading}>
                 Proceed
-                <ChevronRight className="ml-2 h-4 w-4" />
+                <ChevronRight />
               </Button>
             </div>
           </form>
