@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { Building, Check, Edit, MoreHorizontal, Plus, Search, Trash, User } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -20,112 +21,159 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { UserData } from "@/components/context/UserContext"
 
+// Sample payees data
+const initialPayees = [
+  {
+    id: "P-1234",
+    name: "Electric Company",
+    accountNumber: "AC-98765432",
+    type: "Other",
+    lastPayment: "Mar 8, 2025",
+    amount: 85.75,
+    isFrequent: true,
+  },
+  {
+    id: "P-1235",
+    name: "Mortgage Lender",
+    accountNumber: "ML-12345678",
+    type: "Housing",
+    lastPayment: "Mar 1, 2025",
+    amount: 1200.0,
+    isFrequent: true,
+  },
+  {
+    id: "P-1236",
+    name: "Internet Provider",
+    accountNumber: "IP-56781234",
+    type: "Other",
+    lastPayment: "Mar 5, 2025",
+    amount: 65.0,
+    isFrequent: true,
+  },
+  {
+    id: "P-1237",
+    name: "Cell Phone Company",
+    accountNumber: "CP-43218765",
+    type: "Other",
+    lastPayment: "Mar 10, 2025",
+    amount: 95.5,
+    isFrequent: true,
+  },
+  {
+    id: "P-1238",
+    name: "Insurance Provider",
+    accountNumber: "INS-87654321",
+    type: "Insurance",
+    lastPayment: "Mar 15, 2025",
+    amount: 150.25,
+    isFrequent: true,
+  },
+  {
+    id: "P-1239",
+    name: "Credit Card Company",
+    accountNumber: "CC-12348765",
+    type: "Financial",
+    lastPayment: "Mar 20, 2025",
+    amount: 350.0,
+    isFrequent: true,
+  },
+  {
+    id: "P-1240",
+    name: "Gym Membership",
+    accountNumber: "GM-87651234",
+    type: "Health",
+    lastPayment: "Mar 3, 2025",
+    amount: 29.99,
+    isFrequent: false,
+  },
+  {
+    id: "P-1241",
+    name: "Streaming Service",
+    accountNumber: "SS-43215678",
+    type: "Entertainment",
+    lastPayment: "Mar 15, 2025",
+    amount: 14.99,
+    isFrequent: false,
+  },
+]
+
 export default function PayeesPage() {
-  // State management
+  const [payees, setPayees] = useState(initialPayees)
   const [searchTerm, setSearchTerm] = useState("")
   const [isAddPayeeOpen, setIsAddPayeeOpen] = useState(false)
-  const [isEditPayeeOpen, setIsEditPayeeOpen] = useState(false)
   const [newPayee, setNewPayee] = useState({
     name: "",
-    payeeAccNo: "",
+    accountNumber: "",
     ifsc: "",
-    payeeType: "OTHERS"
-  })
-  const [editPayee, setEditPayee] = useState({
-    payeeAccNo: "",
-    name: "",
-    ifsc: "",
-    payeeType: "OTHERS"
+    type: "OTHER",
   })
 
-  // Context functions
-  const {
-    fetchPayees,
-    AddPayeeById,
-    EditPayee,
-    DeletePayee,
-    CheckPayeeName,
-    PayeeName,
-    payees,
-    addPayee
-  } = UserData()
+  const { fetchPayees, AddPayeeById, EditPayee, DeletePayee, CheckPayeeName , PayeeName } = UserData();
 
-  const payerCustomerId = "e48d6144-972e-4572-b6fa-747a22d814d3"
-
-  // Initial data fetch
+  const payerCustomerId = "e48d6144-972e-4572-b6fa-747a22d814d3";
   useEffect(() => {
-    fetchPayees(payerCustomerId)
-  }, [])
+    fetchPayees(payerCustomerId);
+  }, []);
 
   // Filter payees based on search term
   const filteredPayees = payees.filter(
     (payee) =>
       payee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      payee.payeeAccNo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      payee.payeeType.toLowerCase().includes(searchTerm.toLowerCase())
+      payee.accountNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      payee.type.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
   // Handle adding a new payee
   const handleAddPayee = async () => {
-    if (newPayee.name && newPayee.payeeAccNo && newPayee.ifsc) {
+    if (newPayee.name && newPayee.accountNumber && newPayee.ifsc) {
       try {
-        await AddPayeeById(payerCustomerId, newPayee.name, newPayee.ifsc, newPayee.payeeAccNo, newPayee.payeeType)
+        await AddPayeeById(payerCustomerId, newPayee.name, newPayee.ifsc, newPayee.accountNumber, newPayee.type);
         setNewPayee({
           name: "",
-          payeeAccNo: "",
-          payeeType: "OTHERS",
-          ifsc: ""
-        })
-        setIsAddPayeeOpen(false)
-        fetchPayees(payerCustomerId) // Refresh the payees list
+          accountNumber: "",
+          type: "OTHER",
+          ifsc: "",
+        });
+        setIsAddPayeeOpen(false);
+        fetchPayees(payerCustomerId); // Refresh the payees list
       } catch (error) {
-        console.error("Error adding payee:", error)
+        console.error("Error adding payee:", error);
       }
     }
-  }
+  };
 
   // Handle editing a payee
-  const handleEditPayee = async (updatedPayee: { name: string; payeeAccNo: string; ifsc: string; payeeType: string }) => {
+  const handleEditPayee = async (id: string, updatedPayee: { name: string; accountNumber: string; ifsc: string; type: string }) => {
     try {
-      await EditPayee(payerCustomerId, updatedPayee.name, updatedPayee.ifsc, updatedPayee.payeeAccNo, updatedPayee.payeeType)
-      fetchPayees(payerCustomerId) // Refresh the payees list
-      setIsEditPayeeOpen(false)
+      await EditPayee(payerCustomerId, updatedPayee.name, updatedPayee.ifsc, updatedPayee.accountNumber, updatedPayee.type);
+      fetchPayees(payerCustomerId); // Refresh the payees list
     } catch (error) {
-      console.error("Error editing payee:", error)
+      console.error("Error editing payee:", error);
     }
-  }
+  };
 
-  // Handle deleting a payee
+  //Handle deleting a payee
   const handleDeletePayee = async (payeeAccNo: string) => {
     try {
-      await DeletePayee(payerCustomerId, payeeAccNo)
-      fetchPayees(payerCustomerId)
+      await DeletePayee(payerCustomerId, payeeAccNo);
+      fetchPayees(payerCustomerId);
     } catch (error) {
-      console.error("Error deleting payee:", error)
+      console.error("Error deleting payee:", error);
     }
-  }
+  };
 
-  const handleCheckPayeeName = async (payeeAccNo: string, payeeifsc: string, event: React.MouseEvent) => {
-    event.preventDefault()
+  // Handle checking payee name
+  const handleCheckPayeeName = async (payeeifsc: string, accountNumber: string) => {
     try {
-       
-      await CheckPayeeName(payeeAccNo, payeeifsc) 
+      await CheckPayeeName(payeeifsc, accountNumber);
     } catch (error) {
-      console.error("Error checking payee name:", error)
+      console.error("Error checking payee name:", error);
     }
-  }
+  };
 
-  
-
-  // Handle opening edit dialog
-  const handleOpenEditDialog = (payee: any) => {
-    setEditPayee({
-      payeeAccNo: payee.payeeAccNo,
-      name: payee.name,
-      ifsc: payee.payeeifsc,
-      payeeType: payee.payeeType
-    })
-    setIsEditPayeeOpen(true)
+  // Handle marking a payee as frequent
+  const handleToggleFrequent = (id: string) => {
+    setPayees(payees.map((payee) => (payee.id === id ? { ...payee, isFrequent: !payee.isFrequent } : payee)))
   }
 
   return (
@@ -156,18 +204,18 @@ export default function PayeesPage() {
                   onChange={(e) => setNewPayee({ ...newPayee, name: e.target.value })}
                   placeholder="Enter payee name"
                 />
-                {PayeeName ? (
-                   <p className="ml-1 text-sm text-black">Banking Name : <span className="text-violet-600 font-semibold">{PayeeName}</span></p>
-                ):(
-                  <p className="text-red-500"></p>
-                )}
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="payeeAccNo">Account Number</Label>
+                <Label htmlFor="accountNumber">Account Number</Label>
                 <Input
-                  id="payeeAccNo"
-                  value={newPayee.payeeAccNo}
-                  onChange={(e) => setNewPayee({ ...newPayee, payeeAccNo: e.target.value })}
+                  id="accountNumber"
+                  value={newPayee.accountNumber}
+                  onChange={(e) =>
+                    setNewPayee({
+                      ...newPayee,
+                      accountNumber: e.target.value,
+                    })
+                  }
                   placeholder="Enter account number"
                 />
               </div>
@@ -176,14 +224,19 @@ export default function PayeesPage() {
                 <Input
                   id="ifsc"
                   value={newPayee.ifsc}
-                  onChange={(e) => setNewPayee({ ...newPayee, ifsc: e.target.value })}
+                  onChange={(e) =>
+                    setNewPayee({
+                      ...newPayee,
+                      ifsc: e.target.value,
+                    })
+                  }
                   placeholder="Enter account number"
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="payeeType">Payee Type</Label>
-                <Select value={newPayee.payeeType} onValueChange={(value) => setNewPayee({ ...newPayee, payeeType: value })}>
-                  <SelectTrigger id="payeeType">
+                <Label htmlFor="type">Payee Type</Label>
+                <Select value={newPayee.type} onValueChange={(value) => setNewPayee({ ...newPayee, type: value })}>
+                  <SelectTrigger id="type">
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -191,13 +244,12 @@ export default function PayeesPage() {
                     <SelectItem value="ENTERTAINMENT">Entertainment</SelectItem>
                     <SelectItem value="HOUSING">Housing</SelectItem>
                     <SelectItem value="FOOD">Food</SelectItem>
-                    <SelectItem value="OTHERS">Other</SelectItem>
+                    <SelectItem value="OTHER">Other</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
-            <DialogFooter className="flex flex-wrap gap-2">
-                <Button onClick={(e) => handleCheckPayeeName(newPayee.payeeAccNo, newPayee.ifsc, e)} variant="outline">Check Payee Name</Button>
+            <DialogFooter>
               <Button variant="outline" onClick={() => setIsAddPayeeOpen(false)}>
                 Cancel
               </Button>
@@ -222,6 +274,7 @@ export default function PayeesPage() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
+
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {filteredPayees.length === 0 ? (
               <div className="md:col-span-2 lg:col-span-3 text-center py-8">
@@ -229,22 +282,22 @@ export default function PayeesPage() {
               </div>
             ) : (
               filteredPayees.map((payee) => (
-                <Card key={payee.payeeAccNo} className="overflow-hidden">
+                <Card key={payee.id} className="overflow-hidden">
                   <CardHeader className="p-4 pb-2 flex flex-row items-start justify-between space-y-0">
                     <div className="flex items-center space-x-3">
                       <Avatar>
                         <AvatarFallback
                           className={
-                            payee.payeeType === "Other"
+                            payee.type === "Other"
                               ? "bg-blue-500"
-                              : payee.payeeType === "Housing"
-                              ? "bg-green-500"
-                              : payee.payeeType === "Financial"
-                              ? "bg-purple-500"
-                              : "bg-orange-500"
+                              : payee.type === "Housing"
+                                ? "bg-green-500"
+                                : payee.type === "Financial"
+                                  ? "bg-purple-500"
+                                  : "bg-orange-500"
                           }
                         >
-                          {payee.payeeType === "Other" || payee.payeeType === "Housing" ? (
+                          {payee.type === "Other" || payee.type === "Housing" ? (
                             <Building className="h-4 w-4 text-white" />
                           ) : (
                             <User className="h-4 w-4 text-white" />
@@ -253,7 +306,7 @@ export default function PayeesPage() {
                       </Avatar>
                       <div>
                         <CardTitle className="text-base">{payee.name}</CardTitle>
-                        <CardDescription className="text-xs"> {"**** **** " + payee.payeeAccNo.slice(-4)}</CardDescription>
+                        <CardDescription className="text-xs">{payee.accountNumber}</CardDescription>
                       </div>
                     </div>
                     <DropdownMenu>
@@ -264,13 +317,23 @@ export default function PayeesPage() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => handleOpenEditDialog(payee)}>
+                        <DropdownMenuItem onClick={() => handleToggleFrequent(payee.id)}>
+                          {payee.isFrequent ? (
+                            <>
+                              <Check className="mr-2 h-4 w-4" />
+                              <span>Frequent Payee</span>
+                            </>
+                          ) : (
+                            <span>Mark as Frequent</span>
+                          )}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
                           <Edit className="mr-2 h-4 w-4" />
                           <span>Edit Payee</span>
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           className="text-destructive focus:text-destructive"
-                          onClick={() => handleDeletePayee(payee.payeeAccNo)}
+                          onClick={() => handleDeletePayee(payee.id)}
                         >
                           <Trash className="mr-2 h-4 w-4" />
                           <span>Delete Payee</span>
@@ -282,15 +345,15 @@ export default function PayeesPage() {
                     <div className="grid grid-cols-2 gap-2 text-sm">
                       <div>
                         <p className="text-muted-foreground">Type</p>
-                        <p className="font-medium ">{payee.payeeType.charAt(0).toUpperCase() + payee.payeeType.slice(1).toLowerCase()}</p>
+                        <p className="font-medium">{payee.type}</p>
                       </div>
                       <div>
                         <p className="text-muted-foreground">Last Payment</p>
-                        <p className="font-medium">N/A</p>
+                        <p className="font-medium">{payee.lastPayment}</p>
                       </div>
                       <div className="col-span-2">
                         <p className="text-muted-foreground">Last Amount</p>
-                        <p className="font-medium">N/A</p>
+                        <p className="font-medium">{payee.amount > 0 ? `$${payee.amount.toFixed(2)}` : "N/A"}</p>
                       </div>
                     </div>
                     <Button className="w-full mt-4">Pay Now</Button>
@@ -301,72 +364,7 @@ export default function PayeesPage() {
           </div>
         </CardContent>
       </Card>
-
-      <Dialog open={isEditPayeeOpen} onOpenChange={setIsEditPayeeOpen}>
-        <DialogTrigger asChild>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Edit Payee</DialogTitle>
-            <DialogDescription>Edit the details of the selected payee.</DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid gap-2">
-              <Label htmlFor="edit-name">Payee Name</Label>
-              <Input
-                id="edit-name"
-                value={editPayee.name}
-                onChange={(e) => setEditPayee({ ...editPayee, name: e.target.value })}
-                placeholder="Enter payee name"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="edit-payeeAccNo">Account Number</Label>
-              <Input
-                id="edit-payeeAccNo"
-                value={editPayee.payeeAccNo}
-                disabled
-                placeholder="Account number cannot be changed"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="edit-ifsc">IFSC Code</Label>
-              <Input
-                id="edit-ifsc"
-                value={editPayee.ifsc}
-                disabled
-                placeholder="IFSC code cannot be changed"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="edit-payeeType">Payee Type</Label>
-              <Select 
-                value={editPayee.payeeType} 
-                onValueChange={(value) => setEditPayee({ ...editPayee, payeeType: value })}
-              >
-                <SelectTrigger id="edit-payeeType">
-                  <SelectValue placeholder="Select type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="SHOPPING">Shopping</SelectItem>
-                  <SelectItem value="ENTERTAINMENT">Entertainment</SelectItem>
-                  <SelectItem value="HOUSING">Housing</SelectItem>
-                  <SelectItem value="FOOD">Food</SelectItem>
-                  <SelectItem value="OTHERS">Other</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setIsEditPayeeOpen(false)}>
-              Cancel
-            </Button>
-            <Button onClick={() => handleEditPayee(editPayee)}>
-              Save Changes
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   )
 }
+
