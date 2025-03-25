@@ -11,6 +11,7 @@ import {
   CircleAlert,
   ChevronRight,
   ChevronLeft,
+  CalendarIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,13 +36,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import dayjs from "dayjs";
-
-const currentDate = dayjs();
+// Import ShadCN date picker components
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 // ✅ Define Validation Schema
 const formSchema = z.object({
@@ -51,7 +54,9 @@ const formSchema = z.object({
     .refine((date) => date instanceof Date && !isNaN(date.getTime()), {
       message: "Enter valid DOB",
     }),
-  pan: z.string().regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/),
+  pan: z.string().regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, {
+    message: "Enter valid PAN (e.g., ABCDE1234K)",
+  }),
 });
 
 export default function Register2() {
@@ -63,7 +68,7 @@ export default function Register2() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       phone: user.phone || "",
-      dob: user.dob ? new Date(user.dob) : new Date(), // Ensure dob is always a Date object
+      dob: user.dob ? new Date(user.dob) : undefined, // Use undefined as default instead of current date
       pan: user.pan || "",
     },
   });
@@ -114,7 +119,7 @@ export default function Register2() {
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone no</FormLabel>
+                  <FormLabel>Phone Number</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -131,29 +136,49 @@ export default function Register2() {
               )}
             />
 
-            {/* Date of Birth */}
-            <Controller
+            {/* Date of Birth with ShadCN DatePicker */}
+            <FormField
               control={form.control}
               name="dob"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>Date of Birth</FormLabel>
-                  <FormControl>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={["DatePicker"]}>
-                        <DatePicker
-                          {...field}
-                          value={field.value ? dayjs(field.value) : null}
-                          onChange={(date) =>
-                            field.onChange(date ? date.toDate() : null)
-                          }
-                          yearsOrder="desc"
-                          sx={{ width: "100%" }}
-                          maxDate={currentDate}
-                        />
-                      </DemoContainer>
-                    </LocalizationProvider>
-                  </FormControl>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "w-full pl-3 text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                          type="button" // Important: Prevent form submission
+                          onClick={(e) => e.stopPropagation()} // Prevent event bubbling
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {field.value ? (
+                            format(field.value, "PPP")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={(date) => {
+                          field.onChange(date);
+                          // Optional: Close popover on date selection
+                        }}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date("1900-01-01")
+                        }
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
                   <FormMessage />
                 </FormItem>
               )}
@@ -165,14 +190,17 @@ export default function Register2() {
               name="pan"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>PAN no</FormLabel>
+                  <FormLabel>PAN Number</FormLabel>
                   <FormControl>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <Input
                         className="pl-10"
                         placeholder="ABCDE1234K"
                         {...field}
+                        onChange={(e) =>
+                          field.onChange(e.target.value.toUpperCase())
+                        }
                       />
                     </div>
                   </FormControl>
@@ -189,13 +217,14 @@ export default function Register2() {
                 }}
                 className="w-full"
                 disabled={isLoading}
+                variant="outline"
               >
-                <ChevronLeft />
+                <ChevronLeft className="mr-2 h-4 w-4" />
                 Back
               </Button>
               <Button type="submit" className="w-full" disabled={isLoading}>
                 Proceed
-                <ChevronRight />
+                <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
           </form>
