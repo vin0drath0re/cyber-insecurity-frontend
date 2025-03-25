@@ -80,7 +80,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         `http://localhost:5000/api/payees/${payerCustomerId}`
       );
       setPayees(response.data);
-      console.log(response.data);
+      //console.log(response.data);
     } catch (error) {
       console.error("Error fetching payees:", error);
     } finally {
@@ -107,7 +107,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         }
       );
       setAddPayee(response.data);
-      console.log(response.data);
+      //console.log(response.data);
     } catch (error) {
       console.error("Error adding payee:", error);
     } finally {
@@ -134,7 +134,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         }
       );
       setAddPayee(response.data);
-      console.log(response.data);
+      //console.log(response.data);
     } catch (error) {
       console.error("Error editing payee:", error);
     } finally {
@@ -151,7 +151,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
           data: { payeeAccNo },
         }
       );
-      console.log(response.data);
+      //console.log(response.data);
     } catch (error) {
       console.error("Error deleting payee:", error);
     } finally {
@@ -159,21 +159,48 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     }
   };
 
-  const CheckPayeeName = async (payeeifsc: string, payeeAccNo: string) => {
+  const CheckPayeeName = async (payeeAccNo: string , payeeifsc: string, ) => {
     setBtnLoading(true);
+    
     try {
-      const response = await axios.get(`http://localhost:5000/api/payee/name`, {
-        params: { payeeAccNo, payeeifsc },
+      //console.log(payeeifsc, payeeAccNo);
+      
+      const response = await axios.post('http://localhost:5000/api/payees/name', {
+        data: {
+          payeeifsc,
+          payeeAccNo
+        }
       });
-      setPayeeName(response.data);
-      console.log(response.data);
+      
+      if (!response.data?.customerName) {
+        throw new Error('Customer name not found in response');
+      }
+      
+      setPayeeName(response.data.customerName);
+      //console.log(response.data);
+      
     } catch (error) {
-      console.error("Error checking payee name:", error);
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          console.error("Server responded with error:", error.response.data);
+          // Handle specific status codes
+          if (error.response.status === 404) {
+            console.error('Resource not found');
+          } else if (error.response.status === 401 || error.response.status === 403) {
+            console.error('Authentication/Authorization failed');
+          }
+        } else if (error.request) {
+          console.error("No response received from server");
+        } else {
+          console.error("Error sending request:", error.message);
+        }
+      } else {
+        console.error("Unexpected error:", error);
+      }
     } finally {
       setBtnLoading(false);
     }
   };
-
   return (
     <UserContext.Provider
       value={{
