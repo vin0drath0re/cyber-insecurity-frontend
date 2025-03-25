@@ -18,8 +18,9 @@ interface PaymentModalProps {
 const PaymentModal = ({ isOpen, onClose, accounts, onPayment, payeeAccNo }: PaymentModalProps) => {
   const [fromAccount, setFromAccount] = useState('');
   const [toAccount, setToAccount] = useState('');
+  const [description, setDesciption] = useState('');
   const [amount, setAmount] = useState('');
-
+  
   const handlePayment = () => {
     const parsedAmount = parseFloat(amount);
     if (!fromAccount || !toAccount) {
@@ -72,16 +73,28 @@ const PaymentModal = ({ isOpen, onClose, accounts, onPayment, payeeAccNo }: Paym
           </div>
           
           <div className="space-y-2">
+          <label>To Account</label>
           <Input
-              hidden
+            disabled
               defaultValue={payeeAccNo}
             
             />
           </div>
+          <div className="space-y-2">
+            <label>Description</label>
+            <Input 
+              required
+              placeholder="Enter Description"
+              value={description}
+              onChange={(e) => setDesciption(e.target.value)}
+            />
+          </div>
+
 
           <div className="space-y-2">
             <label>Amount</label>
             <Input
+              required
               type="number"
               placeholder="Enter amount"
               value={amount}
